@@ -1,6 +1,6 @@
-Copyright (c) yzane
+Copyright (c) djfdyuruiry
 
-All rights reserved. 
+All rights reserved.
 
 MIT License
 

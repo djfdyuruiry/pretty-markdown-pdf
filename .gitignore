@@ -1,5 +1,2 @@
 node_modules
-work/**
-*.vsix
-*.bat
-.eslintrc.json
+*.log

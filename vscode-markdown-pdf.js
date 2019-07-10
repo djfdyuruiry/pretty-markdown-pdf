@@ -6,36 +6,8 @@ var url = require('url');
 var os = require('os');
 var INSTALL_CHECK = false;
 
-function activate(context) {
-  init();
-
-  var commands = [
-    vscode.commands.registerCommand('extension.markdown-pdf.settings', function () { MarkdownPdf('settings'); }),
-    vscode.commands.registerCommand('extension.markdown-pdf.pdf', function () { MarkdownPdf('pdf'); }),
-    vscode.commands.registerCommand('extension.markdown-pdf.html', function () { MarkdownPdf('html'); }),
-    vscode.commands.registerCommand('extension.markdown-pdf.png', function () { MarkdownPdf('png'); }),
-    vscode.commands.registerCommand('extension.markdown-pdf.jpeg', function () { MarkdownPdf('jpeg'); }),
-    vscode.commands.registerCommand('extension.markdown-pdf.all', function () { MarkdownPdf('all'); })
-  ];
-  commands.forEach(function (command) {
-    context.subscriptions.push(command);
-  });
-
-  var isConvertOnSave = vscode.workspace.getConfiguration('markdown-pdf')['convertOnSave'];
-  if (isConvertOnSave) {
-    var disposable_onsave = vscode.workspace.onDidSaveTextDocument(function () { MarkdownPdfOnSave(); });
-    context.subscriptions.push(disposable_onsave);
-  }
-}
-exports.activate = activate;
-
-// this method is called when your extension is deactivated
-function deactivate() {
-}
-exports.deactivate = deactivate;
-
 function MarkdownPdf(option_type) {
-  
+
   try {
 
     // check active window
@@ -104,43 +76,6 @@ function MarkdownPdf(option_type) {
     }
   } catch (error) {
     showErrorMessage('MarkdownPdf()', error);
-  }
-}
-
-function MarkdownPdfOnSave() {
-  try {
-    var editor = vscode.window.activeTextEditor;
-    var mode = editor.document.languageId;
-    if (mode != 'markdown') {
-      return;
-    }
-    if (!isMarkdownPdfOnSaveExclude()) {
-      MarkdownPdf('settings');
-    }
-  } catch (error) {
-    showErrorMessage('arkdownPdfOnSave()', error);
-  }
-}
-
-function isMarkdownPdfOnSaveExclude() {
-  try{
-    var editor = vscode.window.activeTextEditor;
-    var filename = path.basename(editor.document.fileName);
-    var patterns = vscode.workspace.getConfiguration('markdown-pdf')['convertOnSaveExclude'] || '';
-    var pattern;
-    var i;
-    if (patterns && Array.isArray(patterns) && patterns.length > 0) {
-      for (i = 0; i < patterns.length; i++) {
-        pattern = patterns[i];
-        var re = new RegExp(pattern);
-        if (re.test(filename)) {
-          return true;
-        }
-      }
-    }
-    return false;
-  } catch (error) {
-    showErrorMessage('isMarkdownPdfOnSaveExclude()', error);
   }
 }
 
@@ -344,7 +279,7 @@ function exportPdf(data, filename, type, uri) {
       See https://github.com/yzane/vscode-markdown-pdf#install');
     return;
   }
-  
+
   var StatusbarMessageTimeout = vscode.workspace.getConfiguration('markdown-pdf')['StatusbarMessageTimeout'];
   vscode.window.setStatusBarMessage('');
   var exportFilename = getOutputDir(filename, uri);
@@ -847,4 +782,9 @@ function init() {
   } catch (error) {
     showErrorMessage('init()', error);
   }
+}
+
+module.exports = {
+  convertMarkdownToPdf: () => MarkdownPdf("pdf"),
+  init: init
 }
