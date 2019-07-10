@@ -48,17 +48,6 @@ OUTPUT
 
 ![PlantUML](img/PlantUML.png)
 
-
-## Note on Chromium
-
-Chromium download starts automatically before conversion.
-
-However, it is time-consuming depending on the environment because of its large size (~ 170Mb Mac, ~ 282Mb Linux, ~ 280Mb Win).
-
-During downloading, the message `Installing Chromium` is displayed.
-
-<div class="page"/>
-
 ## Usage
 
 Install this project from the NPM package repository:
@@ -93,3 +82,11 @@ let inputFilePath = path.resolve(inputFile)
 
 prettyMdPdf.convertMdToPdf(inputFilePath)
 ```
+
+## Note on Chromium
+
+Chromium download starts automatically before the first conversion; this is a one time operation, only if your reinstall this package will it be downloaded again.
+
+This isa  time-consuming task depending on the environment because of its large size (~ 170Mb Mac, ~ 282Mb Linux, ~ 280Mb Win).
+
+During the Chromuim download, the message `Installing Chromium` will be displayed in the console.

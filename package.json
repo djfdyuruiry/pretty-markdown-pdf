@@ -10,6 +10,9 @@
     "url": "https://github.com/djfdyuruiry/pretty-markdown-pdf.git"
   },
   "main": "index.js",
+  "bin": {
+    "pretty-md-pdf": "bin/pretty-md-pdf.js"
+  },
   "devDependencies": {
     "removeNPMAbsolutePaths": "^1.0.4"
   },
