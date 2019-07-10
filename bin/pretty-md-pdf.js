@@ -18,9 +18,15 @@ let args = yargs.version(version)
         describe: "Path to a valid markdown file",
         type: "string"
     })
+    .option("output-path", {
+        alias: "o",
+        describe: "Path to output the PDF to",
+        type: "string"
+    })
     .demandOption("input")
     .argv
 
-let markdownPath = path.resolve(args.input)
-
-prettyMdPdf.convertMdToPdf(markdownPath)
+prettyMdPdf.convertMdToPdf(
+    path.resolve(args.input),
+    args["output-path"] ? path.resolve(args["output-path"]) : args["output-path"]
+)

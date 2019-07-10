@@ -9,9 +9,13 @@ const proxyquire =  require("proxyquire").noCallThru()
 const URI = require("vscode-uri").URI
 
 module.exports = {
-    convertMdToPdf: markdownFilePath => {
+    convertMdToPdf: (markdownFilePath, outputDirectory) => {
         if (!markdownFilePath || !markdownFilePath.toLowerCase().endsWith(".md") || !fs.existsSync(markdownFilePath)) {
-            throw new Error(`[pretty-md-pdf] ERROR: Markdown file '${markdownFilePath}' does not exist or is not an '.md' file`);
+            throw new Error(`[pretty-md-pdf] ERROR: Markdown file '${markdownFilePath}' does not exist or is not an '.md' file`)
+        }
+
+        if (outputDirectory && (!fs.existsSync(outputDirectory) || !(fs.statSync(outputDirectory).isDirectory()))) {
+            throw new Error(`[pretty-md-pdf] ERROR: Output directory '${outputDirectory}' does not exist or is not a directory`)
         }
 
         // Mock out the vscode module:
@@ -29,7 +33,7 @@ module.exports = {
                         ],
                         "convertOnSave": false,
                         "convertOnSaveExclude": [],
-                        "outputDirectory": "",
+                        "outputDirectory": outputDirectory || "",
                         "outputDirectoryRelativePathFile": false,
                         "styles": [],
                         "stylesRelativePathFile": false,
@@ -121,6 +125,9 @@ module.exports = {
         markdownPdf.init()
         markdownPdf.convertMarkdownToPdf()
 
-        console.log(`[pretty-md-pdf] Converted markdown file to pdf: ${markdownFilePath.replace(/[.]md$/, ".pdf")}`)
+        let outputPath = outputDirectory ? path.join(outputDirectory, path.basename(markdownFilePath).replace(/[.]md$/, ".pdf")) :
+            markdownFilePath.replace(/[.]md$/, ".pdf")
+
+        console.log(`[pretty-md-pdf] Converted markdown file to pdf: ${outputPath}`)
     }
 }

@@ -63,9 +63,18 @@ To convert a markdown file to PDF, simply run:
 ```bash
 pretty-md-pdf -i my-doc.md
 ```
+
 *Run with `--help` to see all the options available.*
 
 This will output a file `my-doc.pdf` in the directory where `my-doc.md` resides.
+
+To specify an output directory for `my-doc.pdf`, run:
+
+```bash
+pretty-md-pdf -i my-doc.md -o /tmp
+```
+
+Now `my-doc.pdf` will output to
 
 ### Javascript
 
@@ -76,11 +85,13 @@ const path = require("path")
 const prettyMdPdf = require("pretty-markdown-pdf")
 
 let inputFile = "my-doc.md"
+let outputDirectory = "./" // optional
 
-// paths passed to `convertMdToPdf` must be absolute
+// all paths passed to `convertMdToPdf` must be absolute
 let inputFilePath = path.resolve(inputFile)
+let outputPath = path.resolve(outputDirectory)
 
-prettyMdPdf.convertMdToPdf(inputFilePath)
+prettyMdPdf.convertMdToPdf(inputFilePath, outputPath)
 ```
 
 ## Note on Chromium
