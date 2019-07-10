@@ -13,6 +13,9 @@
   "bin": {
     "pretty-md-pdf": "bin/pretty-md-pdf.js"
   },
+  "scripts": {
+    "test": "yarn install && ./bin/pretty-md-pdf.js -i README.md"
+  },
   "devDependencies": {
     "removeNPMAbsolutePaths": "^1.0.4"
   },
