@@ -45,9 +45,6 @@ module.exports = {
             window: {
                 activeTextEditor: {
                     document: {
-                        getText: function() {
-                            return fs.readFileSync(markdownFilePath, "utf8")
-                        },
                         isUntitled: false,
                         languageId: "markdown",
                         uri: {
@@ -83,8 +80,8 @@ module.exports = {
         console.log(`[pretty-md-pdf] Converting markdown file to pdf: ${markdownFilePath}`)
 
         // call the vscode command to convert the current vscode file to pdf
-        markdownPdf.init()
-        markdownPdf.convertMarkdownToPdf()
+        markdownPdf.init(config)
+        markdownPdf.convertMarkdownToPdf(markdownFilePath, config)
 
         let outputPath = config.outputDirectory ? path.join(config.outputDirectory, path.basename(markdownFilePath).replace(/[.]md$/, ".pdf")) :
             markdownFilePath.replace(/[.]md$/, ".pdf")
