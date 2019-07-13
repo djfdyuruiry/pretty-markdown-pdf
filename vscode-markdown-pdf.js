@@ -280,7 +280,6 @@ function exportPdf(data, filename, type, uri) {
     return;
   }
 
-  var StatusbarMessageTimeout = vscode.workspace.getConfiguration('markdown-pdf')['StatusbarMessageTimeout'];
   vscode.window.setStatusBarMessage('');
   var exportFilename = getOutputDir(filename, uri);
 
@@ -292,7 +291,7 @@ function exportPdf(data, filename, type, uri) {
         // export html
         if (type == 'html') {
           exportHtml(data, exportFilename);
-          vscode.window.setStatusBarMessage('$(markdown) ' + exportFilename, StatusbarMessageTimeout);
+          vscode.window.setStatusBarMessage('$(markdown) ' + exportFilename);
           return;
         }
 
@@ -409,7 +408,7 @@ function exportPdf(data, filename, type, uri) {
           }
         }
 
-        vscode.window.setStatusBarMessage('$(markdown) ' + exportFilename, StatusbarMessageTimeout);
+        vscode.window.setStatusBarMessage('$(markdown) ' + exportFilename);
       } catch (error) {
         showErrorMessage('exportPdf()', error);
       }
@@ -711,7 +710,6 @@ function installChromium() {
     // proxy setting
     setProxy();
 
-    var StatusbarMessageTimeout = vscode.workspace.getConfiguration('markdown-pdf')['StatusbarMessageTimeout'];
     const puppeteer = require('puppeteer');
     const browserFetcher = puppeteer.createBrowserFetcher();
     const revision = require(path.join(__dirname, 'node_modules', 'puppeteer', 'package.json')).puppeteer.chromium_revision;
@@ -732,7 +730,7 @@ function installChromium() {
       if (checkPuppeteerBinary()) {
         INSTALL_CHECK = true;
         statusbarmessage.dispose();
-        vscode.window.setStatusBarMessage('$(markdown) Chromium installation succeeded!', StatusbarMessageTimeout);
+        vscode.window.setStatusBarMessage('$(markdown) Chromium installation succeeded!');
         vscode.window.showInformationMessage('[Markdown PDF] Chromium installation succeeded.');
         return Promise.all(cleanupOldVersions);
       }
@@ -740,7 +738,7 @@ function installChromium() {
 
     function onError(error) {
       statusbarmessage.dispose();
-      vscode.window.setStatusBarMessage('$(markdown) ERROR: Failed to download Chromium!', StatusbarMessageTimeout);
+      vscode.window.setStatusBarMessage('$(markdown) ERROR: Failed to download Chromium!');
       showErrorMessage('Failed to download Chromium! \
         If you are behind a proxy, set the http.proxy option to settings.json and restart Visual Studio Code. \
         See https://github.com/yzane/vscode-markdown-pdf#install', error);
@@ -748,7 +746,7 @@ function installChromium() {
 
     function onProgress(downloadedBytes, totalBytes) {
       var progress = parseInt(downloadedBytes / totalBytes * 100);
-      vscode.window.setStatusBarMessage('$(markdown) Installing Chromium ' + progress + '%' , StatusbarMessageTimeout);
+      vscode.window.setStatusBarMessage('$(markdown) Installing Chromium ' + progress + '%' );
     }
   } catch (error) {
     showErrorMessage('installChromium()', error);
