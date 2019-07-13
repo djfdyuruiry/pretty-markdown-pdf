@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<h1 id="pretty-markdown-pdf">Pretty Markdown PDF</h1>
+<p>Easy to use tool to convert a markdown file to a pretty looking PDF.</p>
+<p>The majority of the code is based on the <a href="https://github.com/yzane/vscode-markdown-pdf">vscode-markdown-pdf</a> Visual Studio Code extension, which provides the pretty styles and extra markdown features.</p>
+<p><img src="img/pdf.png" alt="PDF"></p>
+<h2 id="features">Features</h2>
+<p>Supports the following features</p>
+<ul>
+<li>Supports export from MD to PDF, HTML, PNG and JPEG</li>
+<li><a href="https://highlightjs.org/static/demo/">Syntax highlighting</a></li>
+<li><a href="http://www.webpagefx.com/tools/emoji-cheat-sheet/">emoji</a></li>
+<li><a href="https://github.com/mcecot/markdown-it-checkbox">markdown-it-checkbox</a></li>
+<li><a href="https://github.com/markdown-it/markdown-it-container">markdown-it-container</a></li>
+<li><a href="http://plantuml.com/">PlantUML</a>
+<ul>
+<li><a href="https://github.com/gmunguia/markdown-it-plantuml">markdown-it-plantuml</a></li>
+</ul>
+</li>
+</ul>
+<p><a href="sample/README.pdf">Sample pdf file</a>
+<a href="sample/README.html">Sample html file</a>
+<a href="sample/README.png">Sample png file</a>
+<a href="sample/README.jpeg">Sample jpeg file</a></p>
+<h3 id="markdown-it-container">markdown-it-container</h3>
+<p>INPUT</p>
+<pre class='hljs'><code><div>::: warning
+*here be dragons*
+:::
+</div></code></pre>
+<p>OUTPUT</p>
+<pre class='hljs'><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"warning"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">em</span>&gt;</span>here be dragons<span class="hljs-tag">&lt;/<span class="hljs-name">em</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<h3 id="markdown-it-plantuml">markdown-it-plantuml</h3>
+<p>INPUT</p>
+<pre class='hljs'><code><div>@startuml
+Bob -[#red]&gt; Alice : hello
+Alice -[#0000FF]-&gt;Bob : ok
+@enduml
+</div></code></pre>
+<p>OUTPUT</p>
+<p><img src="img/PlantUML.png" alt="PlantUML"></p>
+<h2 id="usage">Usage</h2>
+<p>Install this project from the NPM package repository:</p>
+<pre class='hljs'><code><div>npm install -g pretty-markdown-pdf
+</div></code></pre>
+<h3 id="command-line">Command Line</h3>
+<p>To convert a markdown file to PDF, simply run:</p>
+<pre class='hljs'><code><div>pretty-md-pdf -i my-doc.md
+</div></code></pre>
+<p><em>Run with <code>--help</code> to see all the options available.</em></p>
+<p>This will output a file <code>my-doc.pdf</code> in the directory where <code>my-doc.md</code> resides.</p>
+<p>To specify an output path as <code>my-exported-doc.pdf</code>, run:</p>
+<pre class='hljs'><code><div>pretty-md-pdf -i my-doc.md -o my-exported-doc.pdf
+</div></code></pre>
+<h4 id="other-export-types">Other Export Types</h4>
+<p>To specify an output type other than PDF, run:</p>
+<pre class='hljs'><code><div>pretty-md-pdf -i my-doc.md -t png
+</div></code></pre>
+<h3 id="javascript">Javascript</h3>
+<p>You can programmatically call this package, example:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">const</span> prettyMdPdf = <span class="hljs-built_in">require</span>(<span class="hljs-string">"pretty-markdown-pdf"</span>)
+
+<span class="hljs-comment">// output to `my-doc.pdf`</span>
+prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">"my-doc.md"</span> })
+
+<span class="hljs-comment">// specify an output file path</span>
+prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">"my-doc.md"</span>, <span class="hljs-attr">outputFilePath</span>: <span class="hljs-string">"output.pdf"</span> })
+
+<span class="hljs-comment">// specify an output file type, outputs to `my-doc.html`</span>
+prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">"my-doc.md"</span>, <span class="hljs-attr">outputFileType</span>: <span class="hljs-string">"html"</span> })
+
+</div></code></pre>
+<h2 id="configuration">Configuration</h2>
+<p>Advanced configuration is done using a JSON file. By default the tools uses the one shipped with this package, which has defaults set.</p>
+<p>To specify a config file when running the tool:</p>
+<pre class='hljs'><code><div>pretty-md-pdf -i my-doc.md -c /tmp/config.json
+</div></code></pre>
+<p>From JavaScript you can do:</p>
+<pre class='hljs'><code><div>prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">"my-doc.md"</span>, <span class="hljs-attr">configFilePath</span>: <span class="hljs-string">"/tmp/config.json"</span>)
+</div></code></pre>
+<h3 id="options">Options</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Category</th>
+<th style="text-align:left">Option name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="#save-options">Save options</a></td>
+<td style="text-align:left"><a href="#pretty-pdf-type">type</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-outputdirectory">outputDirectory</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-outputdirectoryrelativepathfile">outputDirectoryRelativePathFile</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="#styles-options">Styles options</a></td>
+<td style="text-align:left"><a href="#pretty-pdf-styles">styles</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-stylesrelativepathfile">stylesRelativePathFile</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-includedefaultstyles">includeDefaultStyles</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="#syntax-highlight-options">Syntax highlight options</a></td>
+<td style="text-align:left"><a href="#pretty-pdf-highlight">highlight</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-highlightstyle">highlightStyle</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="#markdown-options">Markdown options</a></td>
+<td style="text-align:left"><a href="#pretty-pdf-breaks">breaks</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="#emoji-options">Emoji options</a></td>
+<td style="text-align:left"><a href="#pretty-pdf-emoji">emoji</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="#configuration-options">Configuration options</a></td>
+<td style="text-align:left"><a href="#pretty-pdf-executablepath">executablePath</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="#common-options">Common Options</a></td>
+<td style="text-align:left"><a href="#pretty-pdf-scale">scale</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="#pdf-options">PDF options</a></td>
+<td style="text-align:left"><a href="#pretty-pdf-displayheaderfooter">displayHeaderFooter</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-headertemplate">headerTemplate</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-footertemplate">footerTemplate</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-printbackground">printBackground</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-orientation">orientation</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-pageranges">pageRanges</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-format">format</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-width">width</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-height">height</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-margintop">margin.top</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-marginbottom">margin.bottom</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-marginright">margin.right</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-marginleft">margin.left</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="#png-jpeg-options">PNG JPEG options</a></td>
+<td style="text-align:left"><a href="#pretty-pdf-quality">quality</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-clipx">clip.x</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-clipy">clip.y</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-clipwidth">clip.width</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-clipheight">clip.height</a></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><a href="#pretty-pdf-omitbackground">omitBackground</a></td>
+</tr>
+</tbody>
+</table>
+<a id="save-options"/>
+<h3 id="save-options">Save options</h3>
+<a id="pretty-pdf-type"/>
+<h4 id="type"><code>type</code></h4>
+<ul>
+<li>Output format: pdf, html, png, jpeg</li>
+<li>Multiple output formats support</li>
+<li>Default: pdf</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-string">"type"</span>: [
+  <span class="hljs-string">"pdf"</span>,
+  <span class="hljs-string">"html"</span>,
+  <span class="hljs-string">"png"</span>,
+  <span class="hljs-string">"jpeg"</span>
+],
+</div></code></pre>
+<a id="pretty-pdf-outputdirectory"/>
+<h4 id="outputdirectory"><code>outputDirectory</code></h4>
+<ul>
+<li>Output Directory</li>
+<li>All <code>\</code> need to be written as <code>\\</code> (Windows)</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-string">"outputDirectory"</span>: <span class="hljs-string">"C:\\work\\output"</span>,
+</div></code></pre>
+<p><em>Relative Paths</em></p>
+<pre class='hljs'><code><div><span class="hljs-string">"outputDirectory"</span>: <span class="hljs-string">"~/output"</span>,
+</div></code></pre>
+<ul>
+<li>If you set a directory with a <code>relative path</code>, it will be created if the directory does not exist</li>
+<li>If you set a directory with an <code>absolute path</code>, an error occurs if the directory does not exist</li>
+</ul>
+<a id="pretty-pdf-outputDirectoryRelativePathFile"/>
+<h4 id="outputdirectoryrelativepathfile"><code>outputDirectoryRelativePathFile</code></h4>
+<ul>
+<li>If <code>outputDirectoryRelativePathFile</code> option is set to <code>true</code>, the relative path set with <a href="#pretty-pdf-outputDirectory">outputDirectory</a> is interpreted as relative from the file</li>
+<li>boolean. Default: false</li>
+</ul>
+<a id="styles-options"/>
+<h3 id="styles-options">Styles options</h3>
+<a id="pretty-pdf-styles"/>
+<h4 id="styles"><code>styles</code></h4>
+<ul>
+<li>A list of local paths to the stylesheets to use from pretty-markdown-pdf</li>
+<li>If the file does not exist, it will be skipped</li>
+<li>All <code>\</code> need to be written as <code>\\</code> (Windows)</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-string">"styles"</span>: [
+  <span class="hljs-string">"C:\\Users\\&lt;USERNAME&gt;\\Documents\\css"</span>,
+  <span class="hljs-string">"/home/&lt;USERNAME&gt;/settings/css"</span>,
+],
+</div></code></pre>
+<pre class='hljs'><code><div><span class="hljs-string">"styles"</span>: [
+  <span class="hljs-string">"css"</span>,
+],
+</div></code></pre>
+<pre class='hljs'><code><div><span class="hljs-string">"styles"</span>: [
+  <span class="hljs-string">"~/.config/Code/User/css"</span>
+],
+</div></code></pre>
+<ul>
+<li>Remote CSS (https://xxx/xxx.css) is applied correctly for JPG and PNG, but problems occur with PDF</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-string">"styles"</span>: [
+  <span class="hljs-string">"https://xxx/css"</span>
+],
+</div></code></pre>
+<a id="pretty-pdf-stylesRelativePathFile"/>
+<h4 id="stylesrelativepathfile"><code>stylesRelativePathFile</code></h4>
+<ul>
+<li>If <code>stylesRelativePathFile</code> option is set to <code>true</code>, the relative path set with <a href="#pretty-pdf-styles">styles</a> is interpreted as relative from the file</li>
+<li>boolean. Default: false</li>
+</ul>
+<a id="pretty-pdf-includeDefaultStyles"/>
+<h4 id="includedefaultstyles"><code>includeDefaultStyles</code></h4>
+<ul>
+<li>Enable the inclusion of default Markdown styles</li>
+<li>boolean. Default: true</li>
+</ul>
+<a id="syntax-highlight-options"/>
+<h3 id="syntax-highlight-options">Syntax highlight options</h3>
+<a id="pretty-pdf-highlight"/>
+<h4 id="highlight"><code>highlight</code></h4>
+<ul>
+<li>Enable Syntax highlighting</li>
+<li>boolean. Default: true</li>
+</ul>
+<a id="pretty-pdf-highlightStyle"/>
+<h4 id="highlightstyle"><code>highlightStyle</code></h4>
+<ul>
+<li>Set the style file name. for example: github.css, monokai.css ...</li>
+<li><a href="https://github.com/isagalaev/highlight.js/tree/master/src/styles">file name list</a></li>
+<li>demo site : https://highlightjs.org/static/demo/</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-string">"highlightStyle"</span>: <span class="hljs-string">"github.css"</span>,
+</div></code></pre>
+<a id="markdown-options"/>
+<h3 id="markdown-options">Markdown options</h3>
+<a id="pretty-pdf-breaks"/>
+<h4 id="breaks"><code>breaks</code></h4>
+<ul>
+<li>Enable line breaks</li>
+<li>boolean. Default: false</li>
+</ul>
+<a id="emoji-options"/>
+<h3 id="emoji-options">Emoji options</h3>
+<a id="pretty-pdf-emoji"/>
+<h4 id="emoji"><code>emoji</code></h4>
+<ul>
+<li>Enable emoji. <a href="https://www.webpagefx.com/tools/emoji-cheat-sheet/">EMOJI CHEAT SHEET</a></li>
+<li>boolean. Default: true</li>
+</ul>
+<a id="configuration-options"/>
+<h3 id="configuration-options">Configuration options</h3>
+<a id="pretty-pdf-executablePath"/>
+<h4 id="executablepath"><code>executablePath</code></h4>
+<ul>
+<li>Path to a Chromium or Chrome executable to run instead of the bundled Chromium</li>
+<li>All <code>\</code> need to be written as <code>\\</code> (Windows)</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-string">"executablePath"</span>: <span class="hljs-string">"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"</span>
+</div></code></pre>
+<a id="common-options"/>
+<h3 id="common-options">Common Options</h3>
+<a id="pretty-pdf-scale"/>
+<h4 id="scale"><code>scale</code></h4>
+<ul>
+<li>Scale of the page rendering</li>
+<li>number. default: 1</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-string">"scale"</span>: <span class="hljs-number">1</span>
+</div></code></pre>
+<a id="pdf-options"/>
+<h3 id="pdf-options">PDF options</h3>
+<ul>
+<li>pdf only. <a href="https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagepdfoptions">puppeteer page.pdf options</a></li>
+</ul>
+<a id="pretty-pdf-displayHeaderFooter"/>
+<h4 id="displayheaderfooter"><code>displayHeaderFooter</code></h4>
+<ul>
+<li>Enable display header and footer</li>
+<li>boolean. Default: true</li>
+</ul>
+<a id="pretty-pdf-headerTemplate"/>
+<a id="pretty-pdf-footerTemplate"/>
+<h4 id="headertemplate"><code>headerTemplate</code></h4>
+<h4 id="footertemplate"><code>footerTemplate</code></h4>
+<ul>
+<li>HTML template for the print header and footer</li>
+<li><code>&lt;span class='date'&gt;&lt;/span&gt;</code> : formatted print date</li>
+<li><code>&lt;span class='title'&gt;&lt;/span&gt;</code> : markdown file name</li>
+<li><code>&lt;span class='url'&gt;&lt;/span&gt;</code> : markdown full path name</li>
+<li><code>&lt;span class='pageNumber'&gt;&lt;/span&gt;</code> : current page number</li>
+<li><code>&lt;span class='totalPages'&gt;&lt;/span&gt;</code> : total pages in the document</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-string">"headerTemplate"</span>: <span class="hljs-string">"&lt;div style=\"font-size: 9px; margin-left: 1cm;\"&gt; &lt;span class='title'&gt;&lt;/span&gt;&lt;/div&gt; &lt;div style=\"font-size: 9px; margin-left: auto; margin-right: 1cm; \"&gt; &lt;span class='date'&gt;&lt;/span&gt;&lt;/div&gt;"</span>,
+</div></code></pre>
+<pre class='hljs'><code><div><span class="hljs-string">"footerTemplate"</span>: <span class="hljs-string">"&lt;div style=\"font-size: 9px; margin: 0 auto;\"&gt; &lt;span class='pageNumber'&gt;&lt;/span&gt; / &lt;span class='totalPages'&gt;&lt;/span&gt;&lt;/div&gt;"</span>,
+</div></code></pre>
+<a id="pretty-pdf-printBackground"/>
+<h4 id="printbackground"><code>printBackground</code></h4>
+<ul>
+<li>Print background graphics</li>
+<li>boolean. Default: true</li>
+</ul>
+<a id="pretty-pdf-orientation"/>
+<h4 id="orientation"><code>orientation</code></h4>
+<ul>
+<li>Paper orientation</li>
+<li>portrait or landscape</li>
+<li>Default: portrait</li>
+</ul>
+<a id="pretty-pdf-pageRanges"/>
+<h4 id="pageranges"><code>pageRanges</code></h4>
+<ul>
+<li>Paper ranges to print, e.g., '1-5, 8, 11-13'</li>
+<li>Default: all pages</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-string">"pageRanges"</span>: <span class="hljs-string">"1,4-"</span>,
+</div></code></pre>
+<a id="pretty-pdf-format"/>
+<h4 id="format"><code>format</code></h4>
+<ul>
+<li>Paper format</li>
+<li>Letter, Legal, Tabloid, Ledger, A0, A1, A2, A3, A4, A5, A6</li>
+<li>Default: A4</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-string">"format"</span>: <span class="hljs-string">"A4"</span>,
+</div></code></pre>
+<a id="pretty-pdf-width"/>
+<a id="pretty-pdf-height"/>
+<h4 id="width"><code>width</code></h4>
+<h4 id="height"><code>height</code></h4>
+<ul>
+<li>Paper width / height, accepts values labeled with units(mm, cm, in, px)</li>
+<li>If it is set, it overrides the format option</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-string">"width"</span>: <span class="hljs-string">"10cm"</span>,
+<span class="hljs-string">"height"</span>: <span class="hljs-string">"20cm"</span>,
+</div></code></pre>
+<a id="pretty-pdf-margintop"/>
+<a id="pretty-pdf-marginbottom"/>
+<a id="pretty-pdf-marginright"/>
+<a id="pretty-pdf-marginleft"/>
+<h4 id="margintop"><code>margin.top</code></h4>
+<h4 id="marginbottom"><code>margin.bottom</code></h4>
+<h4 id="marginright"><code>margin.right</code></h4>
+<h4 id="marginleft"><code>margin.left</code></h4>
+<ul>
+<li>Paper margins.units(mm, cm, in, px)</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-string">"margin.top"</span>: <span class="hljs-string">"1.5cm"</span>,
+<span class="hljs-string">"margin.bottom"</span>: <span class="hljs-string">"1cm"</span>,
+<span class="hljs-string">"margin.right"</span>: <span class="hljs-string">"1cm"</span>,
+<span class="hljs-string">"margin.left"</span>: <span class="hljs-string">"1cm"</span>,
+</div></code></pre>
+<a id="jpeg-options"/>
+<h3 id="png-jpeg-options">PNG JPEG options</h3>
+<ul>
+<li>png and jpeg only. <a href="https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagescreenshotoptions">puppeteer page.screenshot options</a></li>
+</ul>
+<a id="pretty-pdf-quality"/>
+<h4 id="quality"><code>quality</code></h4>
+<ul>
+<li>jpeg only. The quality of the image, between 0-100. Not applicable to png images</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-string">"quality"</span>: <span class="hljs-number">100</span>,
+</div></code></pre>
+<a id="pretty-pdf-clipx"/>
+<a id="pretty-pdf-clipy"/>
+<a id="pretty-pdf-clipwidth"/>
+<a id="pretty-pdf-clipheight"/>
+<h4 id="clipx"><code>clip.x</code></h4>
+<h4 id="clipy"><code>clip.y</code></h4>
+<h4 id="clipwidth"><code>clip.width</code></h4>
+<h4 id="clipheight"><code>clip.height</code></h4>
+<ul>
+<li>An object which specifies clipping region of the page</li>
+<li>number</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-comment">//  x-coordinate of top-left corner of clip area</span>
+<span class="hljs-string">"clip.x"</span>: <span class="hljs-number">0</span>,
+
+<span class="hljs-comment">// y-coordinate of top-left corner of clip area</span>
+<span class="hljs-string">"clip.y"</span>: <span class="hljs-number">0</span>,
+
+<span class="hljs-comment">// width of clipping area</span>
+<span class="hljs-string">"clip.width"</span>: <span class="hljs-number">1000</span>,
+
+<span class="hljs-comment">// height of clipping area</span>
+<span class="hljs-string">"clip.height"</span>: <span class="hljs-number">1000</span>,
+</div></code></pre>
+<a id="pretty-pdf-omitBackground"/>
+<h4 id="omitbackground"><code>omitBackground</code></h4>
+<ul>
+<li>Hides default white background and allows capturing screenshots with transparency</li>
+<li>boolean. Default: false</li>
+</ul>
+<h2 id="faq">FAQ</h2>
+<h3 id="how-can-i-change-emoji-size">How can I change emoji size ?</h3>
+<ol>
+<li>Add the following to your stylesheet, which you can specified in the styles field</li>
+</ol>
+<pre class='hljs'><code><div><span class="hljs-selector-class">.emoji</span> {
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">2em</span>;
+}
+</div></code></pre>
+<h3 id="output-directory">Output directory</h3>
+<p>If you want to always output to a directory path relative from the Markdown file.</p>
+<p>For example, to output to the &quot;output&quot; directory in the same directory as the Markdown file, set it as follows.</p>
+<pre class='hljs'><code><div><span class="hljs-string">"outputDirectory"</span> : <span class="hljs-string">"output"</span>,
+<span class="hljs-string">"outputDirectoryRelativePathFile"</span>: <span class="hljs-literal">true</span>,
+</div></code></pre>
+<h3 id="page-break">Page Break</h3>
+<p>Please use the following to insert a page break.</p>
+<pre class='hljs'><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"page"</span>/&gt;</span>
+</div></code></pre>
+<h2 id="note-on-chromium">Note on Chromium</h2>
+<p>Chromium download starts automatically before the first conversion; this is a one time operation, only if your reinstall this package will it be downloaded again.</p>
+<p>This isa  time-consuming task depending on the environment because of its large size (~ 170Mb Mac, ~ 282Mb Linux, ~ 280Mb Win).</p>
+<p>During the Chromuim download, the message <code>Installing Chromium</code> will be displayed in the console.</p>
+
+</body>
+</html>

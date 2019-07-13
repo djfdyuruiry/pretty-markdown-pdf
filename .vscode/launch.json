@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/bin/pretty-md-pdf.js",
-            "args": ["-i", "README.md"]
+            "args": ["-i", "README.md", "-o", "anus.pdf"]
         }
     ]
 }

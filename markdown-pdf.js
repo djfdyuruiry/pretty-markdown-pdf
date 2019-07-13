@@ -1,14 +1,15 @@
-let fs = require("fs")
-let os = require("os")
-let path = require("path")
-let url = require("url")
-let URI = require ("vscode-uri").URI
+const fs = require("fs")
+const os = require("os")
+const path = require("path")
+const url = require("url")
+const URI = require ("vscode-uri").URI
+
+const exportTypes = require("./export-types.json")
 
 let INSTALL_CHECK = false
 
-async function MarkdownPdf(inputMarkdownFile, outputFileType, config) {
+async function convertMarkdown(inputMarkdownFile, outputFilePath, outputFileType, config) {
   try {
-
     // check active window
     let ext = path.extname(inputMarkdownFile)
     if (!isExistsPath(inputMarkdownFile)) {
@@ -18,7 +19,7 @@ async function MarkdownPdf(inputMarkdownFile, outputFileType, config) {
 
     let uri = URI.file(inputMarkdownFile)
 
-    let types_format = ["html", "pdf", "png", "jpeg"]
+    let types_format = exportTypes
     let filename = ""
     let types = []
     if (types_format.indexOf(outputFileType) >= 0) {
@@ -33,11 +34,11 @@ async function MarkdownPdf(inputMarkdownFile, outputFileType, config) {
     } else if (outputFileType === "all") {
       types = types_format
     } else {
-      showErrorMessage("Supported formats: html, pdf, png, jpeg.")
+      showErrorMessage(`Supported formats: ${exportTypes.join(", ")}.`)
       return
     }
 
-    // convert and export markdown to pdf, html, png, jpeg
+    // convert and export markdown to `exportTypes`
     if (types && Array.isArray(types) && types.length > 0) {
       for (let i = 0; i < types.length; i++) {
         let type = types[i]
@@ -46,18 +47,18 @@ async function MarkdownPdf(inputMarkdownFile, outputFileType, config) {
           let text = fs.readFileSync(inputMarkdownFile).toString()
           let content = convertMarkdownToHtml(inputMarkdownFile, type, text, config)
           let html = makeHtml(content, uri, config)
-          await exportPdf(html, filename, type, uri, config)
+          await exportPdf(html, filename, outputFilePath, type, uri, config)
         } else {
-          showErrorMessage("Supported formats: html, pdf, png, jpeg.")
+          showErrorMessage(`Supported formats: ${exportTypes.join(", ")}.`)
           return
         }
       }
     } else {
-      showErrorMessage("Supported formats: html, pdf, png, jpeg.")
+      showErrorMessage(`Supported formats: ${exportTypes.join(", ")}.`)
       return
     }
   } catch (error) {
-    showErrorMessage("MarkdownPdf()", error)
+    showErrorMessage("convertMarkdown()", error)
   }
 }
 
@@ -158,7 +159,7 @@ function convertMarkdownToHtml(filename, type, text, config) {
   // toc
   // https://github.com/leff/markdown-it-named-headers
   let options = {
-    slugify: Slug
+    slugify: slug
   }
   md.use(require("markdown-it-named-headers"), options)
 
@@ -188,7 +189,7 @@ function convertMarkdownToHtml(filename, type, text, config) {
   }
 }
 
-function Slug(string) {
+function slug(string) {
   try {
     let stg = encodeURI(string.trim()
       .toLowerCase()
@@ -198,7 +199,7 @@ function Slug(string) {
       .replace(/\-+$/, ""))
     return stg
   } catch (error) {
-    showErrorMessage("Slug()", error)
+    showErrorMessage("slug()", error)
   }
 }
 
@@ -247,7 +248,7 @@ function exportHtml(data, filename) {
 /*
  * export a html to a pdf file (html-pdf)
  */
-async function exportPdf(data, filename, type, uri, config) {
+async function exportPdf(data, filename, outputFilePath, type, uri, config) {
 
   if (!INSTALL_CHECK) {
     return
@@ -258,7 +259,7 @@ async function exportPdf(data, filename, type, uri, config) {
     return
   }
 
-  let exportFilename = getOutputDir(filename, uri, config)
+  let exportFilename = outputFilePath || getOutputDir(filename, uri, config)
 
   console.log("[pretty-md-pdf] Exporting (" + type + ") ...")
 
@@ -266,7 +267,7 @@ async function exportPdf(data, filename, type, uri, config) {
     // export html
     if (type == "html") {
       exportHtml(data, exportFilename)
-      console.log("[pretty-md-pdf] " + exportFilename)
+      console.log("[pretty-md-pdf] Exported to file: " + exportFilename)
       return
     }
 
@@ -383,7 +384,7 @@ async function exportPdf(data, filename, type, uri, config) {
       }
     }
 
-    console.log("[pretty-md-pdf] " + exportFilename)
+    console.log("[pretty-md-pdf] Exported to file: " + exportFilename)
   } catch (error) {
     showErrorMessage("exportPdf()", error)
   }
@@ -695,10 +696,10 @@ async function installChromium(config) {
     try {
         await browserFetcher.download(revisionInfo.revision, (downloadedBytes, totalBytes) => {
           let progress = parseInt(downloadedBytes / totalBytes * 100)
-          console.log("[pretty-md-pdf]Installing Chromium " + progress + "%" )
+          console.log("[pretty-md-pdf] Installing Chromium " + progress + "%" )
         })
     } catch (ex) {
-      console.log("[pretty-md-pdf]ERROR: Failed to download Chromium!")
+      console.log("[pretty-md-pdf] ERROR: Failed to download Chromium!")
       showErrorMessage("Failed to download Chromium! \
         If you are behind a proxy, set the proxy option in config.json", ex)
     }
@@ -713,7 +714,7 @@ async function installChromium(config) {
     if (checkPuppeteerBinary(config)) {
       INSTALL_CHECK = true
 
-      console.log("[pretty-md-pdf]Chromium installation succeeded!")
+      console.log("[pretty-md-pdf] Chromium installation succeeded!")
       console.log("[pretty-md-pdf] Chromium installation succeeded.")
 
       await Promise.all(cleanupOldVersions)
@@ -753,6 +754,6 @@ async function init(config) {
 }
 
 module.exports = {
-  convertMarkdownToPdf: (inputFile, config) => MarkdownPdf(inputFile, "pdf", config),
+  convertMarkdown,
   init
 }

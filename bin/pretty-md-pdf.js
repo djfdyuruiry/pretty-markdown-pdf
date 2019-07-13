@@ -1,35 +1,46 @@
 #! /usr/bin/env node
 const fs = require("fs")
 const path = require("path")
-const prettyMdPdf = require("../")
 const yargs = require("yargs")
 
+const exportTypes = require("../export-types.json")
+const prettyMdPdf = require("../")
+const prettyMdPdfMetadata = require("../package.json")
+
 function getVersionFromPackageJson() {
-    return require(path.join(__dirname, "..", "package.json")).version
+    return prettyMdPdfMetadata.version
 }
 
 function parseArguments() {
     return yargs.version(getVersionFromPackageJson())
+        .epilogue(`Convert from markdown to ${exportTypes.join("/")} with pretty styles`)
         .option("input", {
             alias: "i",
             describe: "Path to a valid markdown file",
             type: "string"
         })
-        .option("output-path", {
+        .option("output", {
             alias: "o",
-            describe: "Path to output the PDF to",
+            describe: "Output file path",
             type: "string"
         })
         .option("config", {
             alias: "c",
             describe: "Path to the JSON config file to use",
-            type: "string"
+            type: "string",
+            default: path.join(__dirname, "..", "config.json")
+        })
+        .options("output-type", {
+            alias: "t",
+            describe: "Format to export",
+            default: "pdf",
+            choices: exportTypes
         })
         .demandOption("input")
         .argv
 }
 
-function getInputFileAndConfig() {
+function getOptions() {
     let args = parseArguments()
     let outputDirectory = args["output-path"]
 
@@ -38,21 +49,20 @@ function getInputFileAndConfig() {
             throw new Error(`[pretty-md-pdf] ERROR: Output directory '${outputDirectory}' does not exist or is not a directory`)
         }
 
-        config.outputDirectory = path.resolve(outputDirectory)
+        config.outputDirectory = outputDirectory
     }
 
     return {
-        inputFile: path.resolve(args.input),
-        configPath: args["config"] || path.join(__dirname, "..", "config.json")
+        markdownFilePath: args.input,
+        outputFilePath: args.output,
+        outputFileType: args["output-type"],
+        configFilePath: args.config
     }
 }
 
-function main() {
-    let inputFileAndConfig = getInputFileAndConfig()
-
-    prettyMdPdf.convertMdToPdf(
-        inputFileAndConfig.inputFile,
-        inputFileAndConfig.configPath
+async function main() {
+    await prettyMdPdf.convertMd(
+        getOptions()
     )
 }
 

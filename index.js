@@ -1,14 +1,23 @@
 const fs = require("fs")
-const markdownPdf = require("./markdown-pdf")
 const path = require("path")
 
+const markdownPdf = require("./markdown-pdf")
+
 module.exports = {
-    convertMdToPdf: async (markdownFilePath, configFilePath) => {
-        if (!markdownFilePath || !markdownFilePath.toLowerCase().endsWith(".md") || !fs.existsSync(markdownFilePath)) {
-            throw new Error(`[pretty-md-pdf] ERROR: Markdown file '${markdownFilePath}' does not exist or is not an '.md' file`)
+    convertMd: async (options) => {
+        options = options || {}
+
+        options.outputFileType = options.outputFileType || "pdf"
+
+        if (!options.markdownFilePath || !options.markdownFilePath.toLowerCase().endsWith(".md") || !fs.existsSync(options.markdownFilePath)) {
+            throw new Error(`[pretty-md-pdf] ERROR: Markdown file '${options.markdownFilePath}' does not exist or is not an '.md' file`)
         }
 
-        let configPath = configFilePath || path.join(__dirname, "..", "config.json")
+        let configPath = path.join(__dirname, "..", "config.json")
+
+        if (options.configFilePath && options.configFilePath.trim() !== "") {
+            configPath = options.configFilePath
+        }
 
         if (!configPath || !fs.existsSync(configPath)) {
             throw new Error(`[pretty-md-pdf] ERROR: Config file '${configPath}' does not exist`)
@@ -18,14 +27,22 @@ module.exports = {
             fs.readFileSync(configPath).toString()
         )
 
-        console.log(`[pretty-md-pdf] Converting markdown file to pdf: ${markdownFilePath}`)
+        if (config.outputDirectory && config.outputDirectory.trim() !== "") {
+            config.outputDirectory = path.resolve(config.outputDirectory)
+        }
+
+        if (options.outputFilePath && options.outputFilePath.trim() !== "") {
+            options.outputFilePath = path.resolve(options.outputFilePath)
+        }
+
+        console.log(`[pretty-md-pdf] Converting markdown file: ${options.markdownFilePath}`)
 
         await markdownPdf.init(config)
-        await markdownPdf.convertMarkdownToPdf(markdownFilePath, config)
-
-        let outputPath = config.outputDirectory ? path.join(config.outputDirectory, path.basename(markdownFilePath).replace(/[.]md$/, ".pdf")) :
-            markdownFilePath.replace(/[.]md$/, ".pdf")
-
-        console.log(`[pretty-md-pdf] Converted markdown file to pdf: ${outputPath}`)
+        await markdownPdf.convertMarkdown(
+            path.resolve(options.markdownFilePath),
+            options.outputFilePath,
+            options.outputFileType,
+            config
+        )
     }
 }
