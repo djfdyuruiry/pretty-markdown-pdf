@@ -4,25 +4,8 @@ const path = require("path")
 const prettyMdPdf = require("../")
 const yargs = require("yargs")
 
-function loadConfig(args) {
-    let configPath = args["config"] || path.join(__dirname, "..", "config.json")
-
-    if (!configPath || !fs.existsSync(configPath)) {
-        throw new Error(`[pretty-md-pdf] ERROR: Config file '${configPath}' does not exist`)
-    }
-
-    return JSON.parse(
-        fs.readFileSync(configPath).toString()
-    )
-}
-
 function getVersionFromPackageJson() {
-    return JSON.parse(
-        fs.readFileSync(
-            path.join(__dirname, "..", "package.json"),
-            "utf8"
-        )
-    ).version
+    return require(path.join(__dirname, "..", "package.json")).version
 }
 
 function parseArguments() {
@@ -48,7 +31,6 @@ function parseArguments() {
 
 function getInputFileAndConfig() {
     let args = parseArguments()
-    let config = loadConfig(args)
     let outputDirectory = args["output-path"]
 
     if (outputDirectory) {
@@ -61,7 +43,7 @@ function getInputFileAndConfig() {
 
     return {
         inputFile: path.resolve(args.input),
-        config
+        configPath: args["config"] || path.join(__dirname, "..", "config.json")
     }
 }
 
@@ -70,7 +52,7 @@ function main() {
 
     prettyMdPdf.convertMdToPdf(
         inputFileAndConfig.inputFile,
-        inputFileAndConfig.config
+        inputFileAndConfig.configPath
     )
 }
 

@@ -1,87 +1,27 @@
-/**
- * Wrapper around the `markdown-pdf` vscode extension that allows
- * calling from outside vscode using the node.js runtime on the
- * command line.
- */
 const fs = require("fs")
+const markdownPdf = require("./markdown-pdf")
 const path = require("path")
-const proxyquire =  require("proxyquire").noCallThru()
-const URI = require("vscode-uri").URI
 
 module.exports = {
-    convertMdToPdf: (markdownFilePath, config) => {
+    convertMdToPdf: async (markdownFilePath, configFilePath) => {
         if (!markdownFilePath || !markdownFilePath.toLowerCase().endsWith(".md") || !fs.existsSync(markdownFilePath)) {
             throw new Error(`[pretty-md-pdf] ERROR: Markdown file '${markdownFilePath}' does not exist or is not an '.md' file`)
         }
 
-        // Mock out the vscode module:
-        //   - capture commands as entry point to trigger pdf conversion
-        //   - pretend we have a markdown file open @ `markdownFilePath`
-        //   - mock message writers using console
-        //   - read in file text and provide paths/URIs
-        //   - handle async execution from extension
-        const vscode = {
-            workspace: {
-                getConfiguration: () => config,
-                getWorkspaceFolder: function(uri) {
-                    return {
-                        index: 0,
-                        name: path.basename(uri.path),
-                        uri: URI.file(path.dirname(uri.path))
-                    }
-                }
-            },
-            ProgressLocation: {
-                Notification: {}
-            },
-            Uri: {
-                parse: function(uri) {
-                    return URI.parse(uri)
-                },
-                file: function(uri) {
-                    return URI.file(uri)
-                }
-            },
-            window: {
-                activeTextEditor: {
-                    document: {
-                        isUntitled: false,
-                        languageId: "markdown",
-                        uri: {
-                            fsPath: markdownFilePath
-                        }
-                    }
-                },
-                setStatusBarMessage: function(msg) {
-                    console.log(msg)
+        let configPath = configFilePath || path.join(__dirname, "..", "config.json")
 
-                    return {
-                        dispose: function() {}
-                    }
-                },
-                showErrorMessage: console.error,
-                showInformationMessage: console.log,
-                showWarningMessage: console.log,
-                withProgress: async function(info, func) {
-                    return await func()
-                }
-            }
+        if (!configPath || !fs.existsSync(configPath)) {
+            throw new Error(`[pretty-md-pdf] ERROR: Config file '${configPath}' does not exist`)
         }
 
-        vscode.commands = {
-            registerCommand: function(name, func) {
-                vscode.commands[name] = func
-            }
-        }
-
-        // load extension using our vscode module mock
-        const markdownPdf = proxyquire("./vscode-markdown-pdf", { "vscode": vscode })
+        let config = JSON.parse(
+            fs.readFileSync(configPath).toString()
+        )
 
         console.log(`[pretty-md-pdf] Converting markdown file to pdf: ${markdownFilePath}`)
 
-        // call the vscode command to convert the current vscode file to pdf
-        markdownPdf.init(config)
-        markdownPdf.convertMarkdownToPdf(markdownFilePath, config)
+        await markdownPdf.init(config)
+        await markdownPdf.convertMarkdownToPdf(markdownFilePath, config)
 
         let outputPath = config.outputDirectory ? path.join(config.outputDirectory, path.basename(markdownFilePath).replace(/[.]md$/, ".pdf")) :
             markdownFilePath.replace(/[.]md$/, ".pdf")
