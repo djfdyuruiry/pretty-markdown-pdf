@@ -1,9 +1,9 @@
-'use strict';
-var vscode = require('vscode');
-var path = require('path');
-var fs = require('fs');
-var url = require('url');
-var os = require('os');
+var fs = require("fs");
+var os = require("os");
+var path = require("path");
+var url = require("url");
+var vscode = require("vscode");
+
 var INSTALL_CHECK = false;
 
 function MarkdownPdf(inputMarkdownFile, outputFileType, config) {
@@ -12,28 +12,28 @@ function MarkdownPdf(inputMarkdownFile, outputFileType, config) {
     // check active window
     var ext = path.extname(inputMarkdownFile);
     if (!isExistsPath(inputMarkdownFile)) {
-      vscode.window.showWarningMessage('File name does not exist!');
+      vscode.window.showWarningMessage("File name does not exist!");
       return;
     }
 
     let uri = vscode.Uri.file(inputMarkdownFile)
 
-    var types_format = ['html', 'pdf', 'png', 'jpeg'];
-    var filename = '';
+    var types_format = ["html", "pdf", "png", "jpeg"];
+    var filename = "";
     var types = [];
     if (types_format.indexOf(outputFileType) >= 0) {
       types[0] = outputFileType;
-    } else if (outputFileType === 'settings') {
-      var types_tmp = config['type'] || 'pdf';
+    } else if (outputFileType === "settings") {
+      var types_tmp = config["type"] || "pdf";
       if (types_tmp && !Array.isArray(types_tmp)) {
           types[0] = types_tmp;
       } else {
-        types = config['type'] || 'pdf';
+        types = config["type"] || "pdf";
       }
-    } else if (outputFileType === 'all') {
+    } else if (outputFileType === "all") {
       types = types_format;
     } else {
-      showErrorMessage('MarkdownPdf().1 Supported formats: html, pdf, png, jpeg.');
+      showErrorMessage("Supported formats: html, pdf, png, jpeg.");
       return;
     }
 
@@ -42,22 +42,22 @@ function MarkdownPdf(inputMarkdownFile, outputFileType, config) {
       for (var i = 0; i < types.length; i++) {
         var type = types[i];
         if (types_format.indexOf(type) >= 0) {
-          filename = inputMarkdownFile.replace(ext, '.' + type);
+          filename = inputMarkdownFile.replace(ext, "." + type);
           var text = fs.readFileSync(inputMarkdownFile).toString();
           var content = convertMarkdownToHtml(inputMarkdownFile, type, text, config);
           var html = makeHtml(content, uri, config);
           exportPdf(html, filename, type, uri, config);
         } else {
-          showErrorMessage('MarkdownPdf().2 Supported formats: html, pdf, png, jpeg.');
+          showErrorMessage("Supported formats: html, pdf, png, jpeg.");
           return;
         }
       }
     } else {
-      showErrorMessage('MarkdownPdf().3 Supported formats: html, pdf, png, jpeg.');
+      showErrorMessage("Supported formats: html, pdf, png, jpeg.");
       return;
     }
   } catch (error) {
-    showErrorMessage('MarkdownPdf()', error);
+    showErrorMessage("MarkdownPdf()", error);
   }
 }
 
@@ -67,10 +67,10 @@ function MarkdownPdf(inputMarkdownFile, outputFileType, config) {
 function convertMarkdownToHtml(filename, type, text, config) {
   try {
     try {
-      var statusbarmessage = vscode.window.setStatusBarMessage('$(markdown) Converting (convertMarkdownToHtml) ...');
-      var hljs = require('highlight.js');
-      var breaks = config['breaks'];
-      var md = require('markdown-it')({
+      var statusbarmessage = vscode.window.setStatusBarMessage("$(markdown) Converting (convertMarkdownToHtml) ...");
+      var hljs = require("highlight.js");
+      var breaks = config["breaks"];
+      var md = require("markdown-it")({
         html: true,
         breaks: breaks,
         highlight: function (str, lang) {
@@ -80,75 +80,75 @@ function convertMarkdownToHtml(filename, type, text, config) {
             } catch (error) {
               str = md.utils.escapeHtml(str);
 
-              showErrorMessage('markdown-it:highlight', error);
+              showErrorMessage("markdown-it:highlight", error);
             }
           } else {
             str = md.utils.escapeHtml(str);
           }
-          return '<pre class="hljs"><code><div>' + str + '</div></code></pre>';
+          return "<pre class='hljs'><code><div>" + str + "</div></code></pre>";
         }
       });
     } catch (error) {
       statusbarmessage.dispose();
-      showErrorMessage('require(\'markdown-it\')', error);
+      showErrorMessage("require(\"markdown-it\")", error);
     }
 
   // convert the img src of the markdown
-  var cheerio = require('cheerio');
+  var cheerio = require("cheerio");
   var defaultRender = md.renderer.rules.image;
   md.renderer.rules.image = function (tokens, idx, options, env, self) {
     var token = tokens[idx];
-    var href = token.attrs[token.attrIndex('src')][1];
+    var href = token.attrs[token.attrIndex("src")][1];
     // console.log("original href: " + href);
-    if (type === 'html') {
-      href = decodeURIComponent(href).replace(/("|')/g, '');
+    if (type === "html") {
+      href = decodeURIComponent(href).replace(/("|")/g, "");
     } else {
       href = convertImgPath(href, filename);
     }
     // console.log("converted href: " + href);
-    token.attrs[token.attrIndex('src')][1] = href;
+    token.attrs[token.attrIndex("src")][1] = href;
     // // pass token to default renderer.
     return defaultRender(tokens, idx, options, env, self);
   };
 
-  if (type !== 'html') {
+  if (type !== "html") {
     // convert the img src of the html
     md.renderer.rules.html_block = function (tokens, idx) {
       var html = tokens[idx].content;
       var $ = cheerio.load(html);
-      $('img').each(function () {
-        var src = $(this).attr('src');
+      $("img").each(function () {
+        var src = $(this).attr("src");
         var href = convertImgPath(src, filename);
-        $(this).attr('src', href);
+        $(this).attr("src", href);
       });
       return $.html();
     };
   }
 
   // checkbox
-  md.use(require('markdown-it-checkbox'));
+  md.use(require("markdown-it-checkbox"));
 
   // emoji
-  var f = config['emoji'];
+  var f = config["emoji"];
   if (f) {
-    var emojies_defs = require(path.join(__dirname, 'data', 'emoji.json'));
+    var emojies_defs = require(path.join(__dirname, "data", "emoji.json"));
     try {
       var options = {
         defs: emojies_defs
       };
     } catch (error) {
       statusbarmessage.dispose();
-      showErrorMessage('markdown-it-emoji:options', error);
+      showErrorMessage("markdown-it-emoji:options", error);
     }
-    md.use(require('markdown-it-emoji'), options);
+    md.use(require("markdown-it-emoji"), options);
     md.renderer.rules.emoji = function (token, idx) {
       var emoji = token[idx].markup;
-      var emojipath = path.join(__dirname, 'node_modules', 'emoji-images', 'pngs', emoji + '.png');
-      var emojidata = readFile(emojipath, null).toString('base64');
+      var emojipath = path.join(__dirname, "node_modules", "emoji-images", "pngs", emoji + ".png");
+      var emojidata = readFile(emojipath, null).toString("base64");
       if (emojidata) {
-        return '<img class="emoji" alt="' + emoji + '" src="data:image/png;base64,' + emojidata + '" />';
+        return "<img class='emoji' alt='" + emoji + "' src='data:image/png;base64," + emojidata + "' />";
       } else {
-        return ':' + emoji + ':';
+        return ":" + emoji + ":";
       }
     };
   }
@@ -158,16 +158,16 @@ function convertMarkdownToHtml(filename, type, text, config) {
   var options = {
     slugify: Slug
   }
-  md.use(require('markdown-it-named-headers'), options);
+  md.use(require("markdown-it-named-headers"), options);
 
   // markdown-it-container
   // https://github.com/markdown-it/markdown-it-container
-  md.use(require('markdown-it-container'), '', {
+  md.use(require("markdown-it-container"), "", {
     validate: function (name) {
       return name.trim().length;
     },
     render: function (tokens, idx) {
-      if (tokens[idx].info.trim() !== '') {
+      if (tokens[idx].info.trim() !== "") {
         return `<div class="${tokens[idx].info.trim()}">\n`;
       } else {
         return `</div>\n`;
@@ -177,14 +177,14 @@ function convertMarkdownToHtml(filename, type, text, config) {
 
   // PlantUML
   // https://github.com/gmunguia/markdown-it-plantuml
-  md.use(require('markdown-it-plantuml'));
+  md.use(require("markdown-it-plantuml"));
 
   statusbarmessage.dispose();
   return md.render(text);
 
   } catch (error) {
     statusbarmessage.dispose();
-    showErrorMessage('convertMarkdownToHtml()', error);
+    showErrorMessage("convertMarkdownToHtml()", error);
   }
 }
 
@@ -196,13 +196,13 @@ function Slug(string) {
   try {
     var stg = encodeURI(string.trim()
       .toLowerCase()
-      .replace(/[\]\[\!\"\#\$\%\&\'\(\)\*\+\,\.\/\:\;\<\=\>\?\@\\\^\_\{\|\}\~\`]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/^\-+/, '')
-      .replace(/\-+$/, ''));
+      .replace(/[\]\[\!\"\#\$\%\&\"\(\)\*\+\,\.\/\:\;\<\=\>\?\@\\\^\_\{\|\}\~\`]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/^\-+/, "")
+      .replace(/\-+$/, ""));
     return stg;
   } catch (error) {
-    showErrorMessage('Slug()', error);
+    showErrorMessage("Slug()", error);
   }
 }
 
@@ -212,18 +212,18 @@ function Slug(string) {
 function makeHtml(data, uri, config) {
   try {
     // read styles
-    var style = '';
+    var style = "";
     style += readStyles(uri, config);
 
     // get title
     var title = path.basename(uri.fsPath);
 
     // read template
-    var filename = path.join(__dirname, 'template', 'template.html');
+    var filename = path.join(__dirname, "template", "template.html");
     var template = readFile(filename);
 
     // compile template
-    var mustache = require('mustache');
+    var mustache = require("mustache");
 
     var view = {
       title: title,
@@ -232,7 +232,7 @@ function makeHtml(data, uri, config) {
     };
     return mustache.render(template, view);
   } catch (error) {
-    showErrorMessage('makeHtml()', error);
+    showErrorMessage("makeHtml()", error);
   }
 }
 
@@ -240,9 +240,9 @@ function makeHtml(data, uri, config) {
  * export a html to a html file
  */
 function exportHtml(data, filename) {
-  fs.writeFile(filename, data, 'utf-8', function (error) {
+  fs.writeFile(filename, data, "utf-8", function (error) {
     if (error) {
-      showErrorMessage('exportHtml()', error);
+      showErrorMessage("exportHtml()", error);
       return;
     }
   });
@@ -257,102 +257,102 @@ function exportPdf(data, filename, type, uri, config) {
     return;
   }
   if (!checkPuppeteerBinary(config)) {
-    showErrorMessage('Chromium or Chrome does not exist! \
-      See https://github.com/yzane/vscode-markdown-pdf#install');
+    showErrorMessage("Chromium or Chrome does not exist! \
+      See https://github.com/yzane/vscode-markdown-pdf#install");
     return;
   }
 
-  vscode.window.setStatusBarMessage('');
+  vscode.window.setStatusBarMessage("");
   var exportFilename = getOutputDir(filename, uri, config);
 
   vscode.window.withProgress({
     location: vscode.ProgressLocation.Notification,
-    title: '[Markdown PDF]: Exporting (' + type + ') ...'
+    title: "[Markdown PDF]: Exporting (" + type + ") ..."
     }, async () => {
       try {
         // export html
-        if (type == 'html') {
+        if (type == "html") {
           exportHtml(data, exportFilename);
-          vscode.window.setStatusBarMessage('$(markdown) ' + exportFilename);
+          vscode.window.setStatusBarMessage("$(markdown) " + exportFilename);
           return;
         }
 
-        const puppeteer = require('puppeteer');
+        const puppeteer = require("puppeteer");
         // create temporary file
         var f = path.parse(filename);
-        var tmpfilename = path.join(f.dir, f.name + '_tmp.html');
+        var tmpfilename = path.join(f.dir, f.name + "_tmp.html");
         exportHtml(data, tmpfilename);
         var options = {
-          executablePath: config['executablePath'] || undefined
+          executablePath: config["executablePath"] || undefined
         }
         const browser = await puppeteer.launch(options).catch(error => {
-          showErrorMessage('puppeteer.launch()', error);
+          showErrorMessage("puppeteer.launch()", error);
         });
         const page = await browser.newPage().catch(error => {
-          showErrorMessage('browser.newPage()', error);
+          showErrorMessage("browser.newPage()", error);
         });;
-        await page.goto(vscode.Uri.file(tmpfilename).toString(), { waitUntil: 'networkidle0' }).catch(error => {
-          showErrorMessage('page.goto()', error);
+        await page.goto(vscode.Uri.file(tmpfilename).toString(), { waitUntil: "networkidle0" }).catch(error => {
+          showErrorMessage("page.goto()", error);
         });;
 
         // generate pdf
         // https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagepdfoptions
-        if (type == 'pdf') {
+        if (type == "pdf") {
           // If width or height option is set, it overrides the format option.
           // In order to set the default value of page size to A4, we changed it from the specification of puppeteer.
-          var width_option = config['width'] || '';
-          var height_option = config['height'] || '';
-          var format_option = '';
+          var width_option = config["width"] || "";
+          var height_option = config["height"] || "";
+          var format_option = "";
           if (!width_option && !height_option) {
-            format_option = config['format'] || 'A4';
+            format_option = config["format"] || "A4";
           }
           var landscape_option;
-          if (config['orientation'] == 'landscape') {
+          if (config["orientation"] == "landscape") {
             landscape_option = true;
           } else {
             landscape_option = false;
           }
           var options = {
             path: exportFilename,
-            scale: config['scale'],
-            displayHeaderFooter: config['displayHeaderFooter'],
-            headerTemplate: config['headerTemplate'] || '',
-            footerTemplate: config['footerTemplate'] || '',
-            printBackground: config['printBackground'],
+            scale: config["scale"],
+            displayHeaderFooter: config["displayHeaderFooter"],
+            headerTemplate: config["headerTemplate"] || "",
+            footerTemplate: config["footerTemplate"] || "",
+            printBackground: config["printBackground"],
             landscape: landscape_option,
-            pageRanges: config['pageRanges'] || '',
+            pageRanges: config["pageRanges"] || "",
             format: format_option,
-            width: config['width'] || '',
-            height: config['height'] || '',
+            width: config["width"] || "",
+            height: config["height"] || "",
             margin: {
-              top: config['margin']['top'] || '',
-              right: config['margin']['right'] || '',
-              bottom: config['margin']['bottom'] || '',
-              left: config['margin']['left'] || ''
+              top: config["margin"]["top"] || "",
+              right: config["margin"]["right"] || "",
+              bottom: config["margin"]["bottom"] || "",
+              left: config["margin"]["left"] || ""
             }
           }
           await page.pdf(options).catch(error => {
-            showErrorMessage('page.pdf', error);
+            showErrorMessage("page.pdf", error);
           });
         }
 
         // generate png and jpeg
         // https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagescreenshotoptions
-        if (type == 'png' || type == 'jpeg') {
+        if (type == "png" || type == "jpeg") {
           // Quality options do not apply to PNG images.
           var quality_option;
-          if (type == 'png') {
+          if (type == "png") {
             quality_option = undefined;
           }
-          if (type == 'jpeg') {
-            quality_option = config['quality'] || 100;
+          if (type == "jpeg") {
+            quality_option = config["quality"] || 100;
           }
 
           // screenshot size
-          var clip_x_option = config['clip']['x'];
-          var clip_y_option = config['clip']['y'];
-          var clip_width_option = config['clip']['width'];
-          var clip_height_option = config['clip']['height'];
+          var clip_x_option = config["clip"]["x"];
+          var clip_y_option = config["clip"]["y"];
+          var clip_width_option = config["clip"]["width"];
+          var clip_height_option = config["clip"]["height"];
           var options;
           if (clip_x_option !== null && clip_y_option !== null && clip_width_option !== null && clip_height_option !== null) {
             options = {
@@ -365,34 +365,34 @@ function exportPdf(data, filename, type, uri, config) {
                 width: clip_width_option,
                 height: clip_height_option,
               },
-              omitBackground: config['omitBackground'],
+              omitBackground: config["omitBackground"],
             }
           } else {
             options = {
               path: exportFilename,
               quality: quality_option,
               fullPage: true,
-              omitBackground: config['omitBackground'],
+              omitBackground: config["omitBackground"],
             }
           }
           await page.screenshot(options).catch(error => {
-            showErrorMessage('page.screenshot()', error);
+            showErrorMessage("page.screenshot()", error);
           });
         }
 
         await browser.close();
 
         // delete temporary file
-        var debug = config['debug'] || false;
+        var debug = config["debug"] || false;
         if (!debug) {
           if (isExistsPath(tmpfilename)) {
             deleteFile(tmpfilename);
           }
         }
 
-        vscode.window.setStatusBarMessage('$(markdown) ' + exportFilename);
+        vscode.window.setStatusBarMessage("$(markdown) " + exportFilename);
       } catch (error) {
-        showErrorMessage('exportPdf()', error);
+        showErrorMessage("exportPdf()", error);
       }
     } // async
   ); // vscode.window.withProgress
@@ -419,7 +419,7 @@ function isExistsDir(dirname) {
     if (fs.statSync(dirname).isDirectory()) {
       return true;
     } else {
-      console.warn('Directory does not exist!') ;
+      console.warn("Directory does not exist!") ;
       return false;
     }
   } catch (error) {
@@ -429,7 +429,7 @@ function isExistsDir(dirname) {
 }
 
 function deleteFile (path) {
-  var rimraf = require('rimraf')
+  var rimraf = require("rimraf")
   rimraf(path, function(error) {
     if (error) throw error;
   });
@@ -441,13 +441,13 @@ function getOutputDir(filename, resource, config) {
     if (resource === undefined) {
       return filename;
     }
-    var outputDirectory = config['outputDirectory'] || '';
+    var outputDirectory = config["outputDirectory"] || "";
     if (outputDirectory.length === 0) {
       return filename;
     }
 
     // Use a home directory relative path If it starts with ~.
-    if (outputDirectory.indexOf('~') === 0) {
+    if (outputDirectory.indexOf("~") === 0) {
       outputDir = outputDirectory.replace(/^~/, os.homedir());
       mkdir(outputDir);
       return path.join(outputDir, path.basename(filename));
@@ -464,7 +464,7 @@ function getOutputDir(filename, resource, config) {
     }
 
     // Use a workspace relative path if there is a workspace and markdown-pdf.outputDirectoryRootPath = workspace
-    var outputDirectoryRelativePathFile = config['outputDirectoryRelativePathFile'];
+    var outputDirectoryRelativePathFile = config["outputDirectoryRelativePathFile"];
     let root = vscode.workspace.getWorkspaceFolder(resource);
     if (outputDirectoryRelativePathFile === false && root) {
       outputDir = path.join(root.uri.fsPath, outputDirectory);
@@ -477,7 +477,7 @@ function getOutputDir(filename, resource, config) {
     mkdir(outputDir);
     return path.join(outputDir, path.basename(filename));
   } catch (error) {
-    showErrorMessage('getOutputDir()', error);
+    showErrorMessage("getOutputDir()", error);
   }
 }
 
@@ -485,58 +485,58 @@ function mkdir(path) {
   if (isExistsDir(path)) {
     return;
   }
-  var mkdirp = require('mkdirp');
+  var mkdirp = require("mkdirp");
   return mkdirp.sync(path);
 }
 
 function readFile(filename, encode) {
   if (filename.length === 0) {
-    return '';
+    return "";
   }
   if (!encode && encode !== null) {
-    encode = 'utf-8';
+    encode = "utf-8";
   }
-  if (filename.indexOf('file://') === 0) {
-    if (process.platform === 'win32') {
-      filename = filename.replace(/^file:\/\/\//, '')
-                 .replace(/^file:\/\//, '');
+  if (filename.indexOf("file://") === 0) {
+    if (process.platform === "win32") {
+      filename = filename.replace(/^file:\/\/\//, "")
+                 .replace(/^file:\/\//, "");
     } else {
-      filename = filename.replace(/^file:\/\//, '');
+      filename = filename.replace(/^file:\/\//, "");
     }
   }
   if (isExistsPath(filename)) {
     return fs.readFileSync(filename, encode);
   } else {
-    return '';
+    return "";
   }
 }
 
 function convertImgPath(src, filename) {
   try {
     var href = decodeURIComponent(src);
-    href = href.replace(/("|')/g, '')
-          .replace(/\\/g, '/')
-          .replace(/#/g, '%23');
+    href = href.replace(/("|")/g, "")
+          .replace(/\\/g, "/")
+          .replace(/#/g, "%23");
     var protocol = url.parse(href).protocol;
-    if (protocol === 'file:' && href.indexOf('file:///') !==0) {
-      return href.replace(/^file:\/\//, 'file:///');
-    } else if (protocol === 'file:') {
+    if (protocol === "file:" && href.indexOf("file:///") !==0) {
+      return href.replace(/^file:\/\//, "file:///");
+    } else if (protocol === "file:") {
       return href;
     } else if (!protocol || path.isAbsolute(href)) {
-      href = path.resolve(path.dirname(filename), href).replace(/\\/g, '/')
-                                                      .replace(/#/g, '%23');
-      if (href.indexOf('//') === 0) {
-        return 'file:' + href;
-      } else if (href.indexOf('/') === 0) {
-        return 'file://' + href;
+      href = path.resolve(path.dirname(filename), href).replace(/\\/g, "/")
+                                                      .replace(/#/g, "%23");
+      if (href.indexOf("//") === 0) {
+        return "file:" + href;
+      } else if (href.indexOf("/") === 0) {
+        return "file://" + href;
       } else {
-        return 'file:///' + href;
+        return "file:///" + href;
       }
     } else {
       return src;
     }
   } catch (error) {
-    showErrorMessage('convertImgPath()', error);
+    showErrorMessage("convertImgPath()", error);
   }
 }
 
@@ -544,74 +544,74 @@ function makeCss(filename) {
   try {
     var css = readFile(filename);
     if (css) {
-      return '\n<style>\n' + css + '\n</style>\n';
+      return "\n<style>\n" + css + "\n</style>\n";
     } else {
-      return '';
+      return "";
     }
   } catch (error) {
-    showErrorMessage('makeCss()', error);
+    showErrorMessage("makeCss()", error);
   }
 }
 
 function readStyles(uri, config) {
   try {
     var includeDefaultStyles;
-    var style = '';
-    var styles = '';
-    var filename = '';
+    var style = "";
+    var styles = "";
+    var filename = "";
     var i;
 
-    includeDefaultStyles = config['includeDefaultStyles'];
+    includeDefaultStyles = config["includeDefaultStyles"];
 
     // 1. read the style of the vscode.
     if (includeDefaultStyles) {
-      filename = path.join(__dirname, 'styles', 'markdown.css');
+      filename = path.join(__dirname, "styles", "markdown.css");
       style += makeCss(filename);
     }
 
     // 2. read the style of the markdown.styles setting.
     if (includeDefaultStyles) {
-      styles = vscode.workspace.getConfiguration('markdown')['styles'];
+      styles = vscode.workspace.getConfiguration("markdown")["styles"];
       if (styles && Array.isArray(styles) && styles.length > 0) {
         for (i = 0; i < styles.length; i++) {
           var href = fixHref(uri, styles[i]);
-          style += '<link rel=\"stylesheet\" href=\"' + href + '\" type=\"text/css\">';
+          style += "<link rel=\"stylesheet\" href=\"" + href + "\" type=\"text/css\">";
         }
       }
     }
 
     // 3. read the style of the highlight.js.
-    var highlightStyle = config['highlightStyle'] || '';
-    var ishighlight = config['highlight'];
+    var highlightStyle = config["highlightStyle"] || "";
+    var ishighlight = config["highlight"];
     if (ishighlight) {
       if (highlightStyle) {
-        var css = config['highlightStyle'] || 'github.css';
-        filename = path.join(__dirname, 'node_modules', 'highlight.js', 'styles', css);
+        var css = config["highlightStyle"] || "github.css";
+        filename = path.join(__dirname, "node_modules", "highlight.js", "styles", css);
         style += makeCss(filename);
       } else {
-        filename = path.join(__dirname, 'styles', 'tomorrow.css');
+        filename = path.join(__dirname, "styles", "tomorrow.css");
         style += makeCss(filename);
       }
     }
 
     // 4. read the style of the markdown-pdf.
     if (includeDefaultStyles) {
-      filename = path.join(__dirname, 'styles', 'markdown-pdf.css');
+      filename = path.join(__dirname, "styles", "markdown-pdf.css");
       style += makeCss(filename);
     }
 
     // 5. read the style of the markdown-pdf.styles settings.
-    styles = config['styles'] || '';
+    styles = config["styles"] || "";
     if (styles && Array.isArray(styles) && styles.length > 0) {
       for (i = 0; i < styles.length; i++) {
         var href = fixHref(uri, styles[i]);
-        style += '<link rel=\"stylesheet\" href=\"' + href + '\" type=\"text/css\">';
+        style += "<link rel=\"stylesheet\" href=\"" + href + "\" type=\"text/css\">";
       }
     }
 
     return style;
   } catch (error) {
-    showErrorMessage('readStyles()', error);
+    showErrorMessage("readStyles()", error);
   }
 }
 
@@ -630,22 +630,22 @@ function fixHref(resource, href, config) {
 
     // Use href if it is already an URL
     const hrefUri = vscode.Uri.parse(href);
-    if (['http', 'https'].indexOf(hrefUri.scheme) >= 0) {
+    if (["http", "https"].indexOf(hrefUri.scheme) >= 0) {
       return hrefUri.toString();
     }
 
     // Use a home directory relative path If it starts with ^.
-    if (href.indexOf('~') === 0) {
+    if (href.indexOf("~") === 0) {
       return vscode.Uri.file(href.replace(/^~/, os.homedir())).toString();
     }
 
     // Use href as file URI if it is absolute
-    if (path.isAbsolute(href) || hrefUri.scheme === 'file') {
+    if (path.isAbsolute(href) || hrefUri.scheme === "file") {
       return vscode.Uri.file(href).toString();
     }
 
     // Use a workspace relative path if there is a workspace and markdown-pdf.stylesRelativePathFile is false
-    var stylesRelativePathFile = config['stylesRelativePathFile'];
+    var stylesRelativePathFile = config["stylesRelativePathFile"];
     let root = vscode.workspace.getWorkspaceFolder(resource);
     if (stylesRelativePathFile === false && root) {
       return vscode.Uri.file(path.join(root.uri.fsPath, href)).toString();
@@ -654,21 +654,21 @@ function fixHref(resource, href, config) {
     // Otherwise look relative to the markdown file
     return vscode.Uri.file(path.join(path.dirname(resource.fsPath), href)).toString();
   } catch (error) {
-    showErrorMessage('fixHref()', error);
+    showErrorMessage("fixHref()", error);
   }
 }
 
 function checkPuppeteerBinary(config) {
   try {
     // settings.json
-    var executablePath = config['executablePath'] || ''
+    var executablePath = config["executablePath"] || ""
     if (isExistsPath(executablePath)) {
       INSTALL_CHECK = true;
       return true;
     }
 
     // bundled Chromium
-    const puppeteer = require('puppeteer');
+    const puppeteer = require("puppeteer");
     executablePath = puppeteer.executablePath();
     if (isExistsPath(executablePath)) {
       return true;
@@ -676,7 +676,7 @@ function checkPuppeteerBinary(config) {
       return false;
     }
   } catch (error) {
-    showErrorMessage('checkPuppeteerBinary()', error);
+    showErrorMessage("checkPuppeteerBinary()", error);
   }
 }
 
@@ -686,15 +686,15 @@ function checkPuppeteerBinary(config) {
  */
 function installChromium(config) {
   try {
-    vscode.window.showInformationMessage('[Markdown PDF] Installing Chromium ...');
-    var statusbarmessage = vscode.window.setStatusBarMessage('$(markdown) Installing Chromium ...');
+    vscode.window.showInformationMessage("[Markdown PDF] Installing Chromium ...");
+    var statusbarmessage = vscode.window.setStatusBarMessage("$(markdown) Installing Chromium ...");
 
     // proxy setting
     setProxy();
 
-    const puppeteer = require('puppeteer');
+    const puppeteer = require("puppeteer");
     const browserFetcher = puppeteer.createBrowserFetcher();
-    const revision = require(path.join(__dirname, 'node_modules', 'puppeteer', 'package.json')).puppeteer.chromium_revision;
+    const revision = require(path.join(__dirname, "node_modules", "puppeteer", "package.json")).puppeteer.chromium_revision;
     const revisionInfo = browserFetcher.revisionInfo(revision);
 
     // download Chromium
@@ -704,7 +704,7 @@ function installChromium(config) {
       .catch(onError);
 
     function onSuccess(localRevisions) {
-      console.log('Chromium downloaded to ' + revisionInfo.folderPath);
+      console.log("Chromium downloaded to " + revisionInfo.folderPath);
       localRevisions = localRevisions.filter(revision => revision !== revisionInfo.revision);
       // Remove previous chromium revisions.
       const cleanupOldVersions = localRevisions.map(revision => browserFetcher.remove(revision));
@@ -712,32 +712,32 @@ function installChromium(config) {
       if (checkPuppeteerBinary(config)) {
         INSTALL_CHECK = true;
         statusbarmessage.dispose();
-        vscode.window.setStatusBarMessage('$(markdown) Chromium installation succeeded!');
-        vscode.window.showInformationMessage('[Markdown PDF] Chromium installation succeeded.');
+        vscode.window.setStatusBarMessage("$(markdown) Chromium installation succeeded!");
+        vscode.window.showInformationMessage("[Markdown PDF] Chromium installation succeeded.");
         return Promise.all(cleanupOldVersions);
       }
     }
 
     function onError(error) {
       statusbarmessage.dispose();
-      vscode.window.setStatusBarMessage('$(markdown) ERROR: Failed to download Chromium!');
-      showErrorMessage('Failed to download Chromium! \
+      vscode.window.setStatusBarMessage("$(markdown) ERROR: Failed to download Chromium!");
+      showErrorMessage("Failed to download Chromium! \
         If you are behind a proxy, set the http.proxy option to settings.json and restart Visual Studio Code. \
-        See https://github.com/yzane/vscode-markdown-pdf#install', error);
+        See https://github.com/yzane/vscode-markdown-pdf#install", error);
     }
 
     function onProgress(downloadedBytes, totalBytes) {
       var progress = parseInt(downloadedBytes / totalBytes * 100);
-      vscode.window.setStatusBarMessage('$(markdown) Installing Chromium ' + progress + '%' );
+      vscode.window.setStatusBarMessage("$(markdown) Installing Chromium " + progress + "%" );
     }
   } catch (error) {
-    showErrorMessage('installChromium()', error);
+    showErrorMessage("installChromium()", error);
   }
 }
 
 function showErrorMessage(msg, error) {
-  vscode.window.showErrorMessage('ERROR: ' + msg);
-  console.log('ERROR: ' + msg);
+  vscode.window.showErrorMessage("ERROR: " + msg);
+  console.log("ERROR: " + msg);
   if (error) {
     vscode.window.showErrorMessage(error.toString());
     console.log(error);
@@ -745,7 +745,7 @@ function showErrorMessage(msg, error) {
 }
 
 function setProxy() {
-  var https_proxy = vscode.workspace.getConfiguration('http')['proxy'] || '';
+  var https_proxy = vscode.workspace.getConfiguration("http")["proxy"] || "";
   if (https_proxy) {
     process.env.HTTPS_PROXY = https_proxy;
     process.env.HTTP_PROXY = https_proxy;
@@ -760,7 +760,7 @@ function init(config) {
       installChromium(config);
     }
   } catch (error) {
-    showErrorMessage('init()', error);
+    showErrorMessage("init()", error);
   }
 }
 
