@@ -14,6 +14,7 @@
     "pretty-md-pdf": "bin/pretty-md-pdf.js"
   },
   "scripts": {
+    "samples": "yarn install && ./generate-samples.sh",
     "test": "yarn install && ./bin/pretty-md-pdf.js -i README.md"
   },
   "dependencies": {

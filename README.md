@@ -120,6 +120,44 @@ From JavaScript you can do:
 prettyMdPdf.convertMdToPdf({ markdownFilePath: "my-doc.md", configFilePath: "/tmp/config.json")
 ```
 
+### Example
+
+Below is the default config JSON file as an example:
+
+```json
+{
+    "type": [
+        "pdf"
+    ],
+    "outputDirectory": "",
+    "outputDirectoryRelativePathFile": false,
+    "styles": [],
+    "stylesRelativePathFile": false,
+    "includeDefaultStyles": true,
+    "highlight": true,
+    "highlightStyle": "",
+    "breaks": false,
+    "emoji": true,
+    "executablePath": "",
+    "scale": 1,
+    "displayHeaderFooter": true,
+    "headerTemplate": "<div style=\"font-size: 9px; margin-left: 1cm;\"> <span class='title'></span></div> <div style=\"font-size: 9px; margin-left: auto; margin-right: 1cm; \"> <span class='date'></span></div>",
+    "footerTemplate": "<div style=\"font-size: 9px; margin: 0 auto;\"> <span class='pageNumber'></span> / <span class='totalPages'></span></div>",
+    "printBackground": true,
+    "orientation": "portrait",
+    "pageRanges": "",
+    "format": "A4",
+    "width": "",
+    "height": "",
+    "margin": "1cm",
+    "quality": 100,
+    "clip": {
+        "height": null
+    },
+    "omitBackground": false
+}
+```
+
 ### Options
 
 |Category| Option name|

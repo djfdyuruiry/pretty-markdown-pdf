@@ -485,6 +485,40 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <p>From JavaScript you can do:</p>
 <pre class='hljs'><code><div>prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">"my-doc.md"</span>, <span class="hljs-attr">configFilePath</span>: <span class="hljs-string">"/tmp/config.json"</span>)
 </div></code></pre>
+<h3 id="example">Example</h3>
+<p>Below is the default config JSON file as an example:</p>
+<pre class='hljs'><code><div>{
+    <span class="hljs-attr">"type"</span>: [
+        <span class="hljs-string">"pdf"</span>
+    ],
+    <span class="hljs-attr">"outputDirectory"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">"outputDirectoryRelativePathFile"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"styles"</span>: [],
+    <span class="hljs-attr">"stylesRelativePathFile"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"includeDefaultStyles"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"highlight"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"highlightStyle"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">"breaks"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"emoji"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"executablePath"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">"scale"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"displayHeaderFooter"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"headerTemplate"</span>: <span class="hljs-string">"&lt;div style=\"font-size: 9px; margin-left: 1cm;\"&gt; &lt;span class='title'&gt;&lt;/span&gt;&lt;/div&gt; &lt;div style=\"font-size: 9px; margin-left: auto; margin-right: 1cm; \"&gt; &lt;span class='date'&gt;&lt;/span&gt;&lt;/div&gt;"</span>,
+    <span class="hljs-attr">"footerTemplate"</span>: <span class="hljs-string">"&lt;div style=\"font-size: 9px; margin: 0 auto;\"&gt; &lt;span class='pageNumber'&gt;&lt;/span&gt; / &lt;span class='totalPages'&gt;&lt;/span&gt;&lt;/div&gt;"</span>,
+    <span class="hljs-attr">"printBackground"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"orientation"</span>: <span class="hljs-string">"portrait"</span>,
+    <span class="hljs-attr">"pageRanges"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"A4"</span>,
+    <span class="hljs-attr">"width"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">"height"</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">"margin"</span>: <span class="hljs-string">"1cm"</span>,
+    <span class="hljs-attr">"quality"</span>: <span class="hljs-number">100</span>,
+    <span class="hljs-attr">"clip"</span>: {
+        <span class="hljs-attr">"height"</span>: <span class="hljs-literal">null</span>
+    },
+    <span class="hljs-attr">"omitBackground"</span>: <span class="hljs-literal">false</span>
+}
+</div></code></pre>
 <h3 id="options">Options</h3>
 <table>
 <thead>
