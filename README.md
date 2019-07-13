@@ -2,7 +2,7 @@
 
 Easy to use tool to convert a markdown file to a pretty looking PDF.
 
-The majority of this tool is based on the [vscode-markdown-pdf](https://github.com/yzane/vscode-markdown-pdf) Visual Studio Code extension, which provides the pretty styles and exra markdown features.
+The majority of the code is based on the [vscode-markdown-pdf](https://github.com/yzane/vscode-markdown-pdf) Visual Studio Code extension, which provides the pretty styles and extra markdown features.
 
 ![PDF](img/pdf.png)
 
