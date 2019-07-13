@@ -15,7 +15,7 @@
   },
   "scripts": {
     "samples": "yarn install && ./generate-samples.sh",
-    "test": "yarn install && ./bin/pretty-md-pdf.js -i README.md"
+    "test": "yarn samples"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
