@@ -24,17 +24,23 @@ function parseArguments() {
             describe: "Output file path",
             type: "string"
         })
-        .option("config", {
-            alias: "c",
-            describe: "Path to the JSON config file to use",
-            type: "string",
-            default: path.join(__dirname, "..", "config.json")
-        })
         .options("output-type", {
             alias: "t",
             describe: "Format to export",
             default: "pdf",
             choices: exportTypes
+        })
+        .options("chromium-args", {
+            alias: "a",
+            describe: "Arguments to pass to Chromium when running Puppeteer",
+            default: "",
+            type: "array"
+        })
+        .option("config", {
+            alias: "c",
+            describe: "Path to the JSON config file to use",
+            type: "string",
+            default: path.join(__dirname, "..", "config.json")
         })
         .demandOption("input")
         .argv
@@ -56,6 +62,7 @@ function getOptions() {
         markdownFilePath: args.input,
         outputFilePath: args.output,
         outputFileType: args["output-type"],
+        chromiumArgs: args["chromium-args"],
         configFilePath: args.config
     }
 }
