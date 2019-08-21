@@ -33,8 +33,8 @@ function parseArguments() {
         .options("chromium-args", {
             alias: "a",
             describe: "Arguments to pass to Chromium when running Puppeteer",
-            default: "",
-            type: "array"
+            default: null,
+            type: "string"
         })
         .option("config", {
             alias: "c",
@@ -58,11 +58,17 @@ function getOptions() {
         config.outputDirectory = outputDirectory
     }
 
+    let chromiumArgs = undefined
+
+    if (args['chromium-args']) {
+        chromiumArgs = JSON.parse(args['chromium-args'])
+    }
+
     return {
         markdownFilePath: args.input,
         outputFilePath: args.output,
         outputFileType: args["output-type"],
-        chromiumArgs: args["chromium-args"],
+        chromiumArgs,
         configFilePath: args.config
     }
 }
