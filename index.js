@@ -42,6 +42,7 @@ module.exports = {
             path.resolve(options.markdownFilePath),
             options.outputFilePath,
             options.outputFileType,
+            options.chromiumArgs,
             config
         )
     }

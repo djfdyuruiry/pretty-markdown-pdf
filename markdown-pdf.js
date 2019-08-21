@@ -8,7 +8,7 @@ const exportTypes = require("./export-types.json")
 
 let INSTALL_CHECK = false
 
-async function convertMarkdown(inputMarkdownFile, outputFilePath, outputFileType, config) {
+async function convertMarkdown(inputMarkdownFile, outputFilePath, outputFileType, chromiumArgs, config) {
   try {
     // check active window
     let ext = path.extname(inputMarkdownFile)
@@ -47,7 +47,7 @@ async function convertMarkdown(inputMarkdownFile, outputFilePath, outputFileType
           let text = fs.readFileSync(inputMarkdownFile).toString()
           let content = convertMarkdownToHtml(inputMarkdownFile, type, text, config)
           let html = makeHtml(content, uri, config)
-          await exportPdf(html, filename, outputFilePath, type, uri, config)
+          await exportPdf(html, filename, outputFilePath, type, uri, chromiumArgs, config)
         } else {
           showErrorMessage(`Supported formats: ${exportTypes.join(", ")}.`)
           return
@@ -248,7 +248,7 @@ function exportHtml(data, filename) {
 /*
  * export a html to a pdf file (html-pdf)
  */
-async function exportPdf(data, filename, outputFilePath, type, uri, config) {
+async function exportPdf(data, filename, outputFilePath, type, uri, chromiumArgs, config) {
 
   if (!INSTALL_CHECK) {
     return
@@ -277,8 +277,10 @@ async function exportPdf(data, filename, outputFilePath, type, uri, config) {
     let tmpfilename = path.join(f.dir, f.name + "_tmp.html")
     exportHtml(data, tmpfilename)
     let options = {
-      executablePath: config["executablePath"] || undefined
+      executablePath: config["executablePath"] || undefined,
+      args: chromiumArgs || undefined
     }
+
     let browser = await puppeteer.launch(options).catch(error => {
       showErrorMessage("puppeteer.launch()", error)
     })
