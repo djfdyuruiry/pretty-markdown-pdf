@@ -13,7 +13,7 @@ module.exports = {
             throw new Error(`[pretty-md-pdf] ERROR: Markdown file '${options.markdownFilePath}' does not exist or is not an '.md' file`)
         }
 
-        let configPath = path.join(__dirname, "..", "config.json")
+        let configPath = path.join(__dirname, "config.json")
 
         if (options.configFilePath && options.configFilePath.trim() !== "") {
             configPath = options.configFilePath
