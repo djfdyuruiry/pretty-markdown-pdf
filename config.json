@@ -11,6 +11,7 @@
     "highlightStyle": "",
     "breaks": false,
     "emoji": true,
+    "markdown-it-include": true,
     "executablePath": "",
     "scale": 1,
     "displayHeaderFooter": true,

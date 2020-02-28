@@ -181,6 +181,17 @@ function convertMarkdownToHtml(filename, type, text, config) {
   // PlantUML
   // https://github.com/gmunguia/markdown-it-plantuml
   md.use(require("markdown-it-plantuml"))
+    
+  // markdown-it-include
+  // https://github.com/camelaissani/markdown-it-include
+  // the syntax is :[alt-text](relative-path-to-file.md)
+  // https://talk.commonmark.org/t/transclusion-or-including-sub-documents-for-reuse/270/13
+  if (config['markdown-it-include']) {
+    md.use(require("markdown-it-include"), {
+      root: path.dirname(filename),
+      includeRe: /\:(?:\[[^\]]*\])?\(([^)]+\.*)\)/i
+    });
+  }
 
   return md.render(text)
 
