@@ -138,6 +138,7 @@ Below is the default config JSON file as an example:
     "highlightStyle": "",
     "breaks": false,
     "emoji": true,
+    "markdown-it-include": true,
     "executablePath": "",
     "scale": 1,
     "displayHeaderFooter": true,
