@@ -537,6 +537,6 @@ Please use the following to insert a page break.
 
 Chromium download starts automatically before the first conversion; this is a one time operation, only if your reinstall this package will it be downloaded again.
 
-This isa  time-consuming task depending on the environment because of its large size (~ 170Mb Mac, ~ 282Mb Linux, ~ 280Mb Win).
+This is a time-consuming task depending on the environment because of its large size (~ 170Mb Mac, ~ 282Mb Linux, ~ 280Mb Win).
 
 During the Chromuim download, the message `Installing Chromium` will be displayed in the console.

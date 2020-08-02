@@ -433,7 +433,7 @@ blockquote {
 :::
 </div></code></pre>
 <p>OUTPUT</p>
-<pre class='hljs'><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"warning"</span>&gt;</span>
+<pre class='hljs'><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;warning&quot;</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">em</span>&gt;</span>here be dragons<span class="hljs-tag">&lt;/<span class="hljs-name">em</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 </div></code></pre>
@@ -465,16 +465,16 @@ Alice -[#0000FF]-&gt;Bob : ok
 </div></code></pre>
 <h3 id="javascript">Javascript</h3>
 <p>You can programmatically call this package, example:</p>
-<pre class='hljs'><code><div><span class="hljs-keyword">const</span> prettyMdPdf = <span class="hljs-built_in">require</span>(<span class="hljs-string">"pretty-markdown-pdf"</span>)
+<pre class='hljs'><code><div><span class="hljs-keyword">const</span> prettyMdPdf = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;pretty-markdown-pdf&quot;</span>)
 
 <span class="hljs-comment">// output to `my-doc.pdf`</span>
-prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">"my-doc.md"</span> })
+prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span> })
 
 <span class="hljs-comment">// specify an output file path</span>
-prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">"my-doc.md"</span>, <span class="hljs-attr">outputFilePath</span>: <span class="hljs-string">"output.pdf"</span> })
+prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">outputFilePath</span>: <span class="hljs-string">&quot;output.pdf&quot;</span> })
 
 <span class="hljs-comment">// specify an output file type, outputs to `my-doc.html`</span>
-prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">"my-doc.md"</span>, <span class="hljs-attr">outputFileType</span>: <span class="hljs-string">"html"</span> })
+prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">outputFileType</span>: <span class="hljs-string">&quot;html&quot;</span> })
 
 </div></code></pre>
 <h2 id="configuration">Configuration</h2>
@@ -483,41 +483,41 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <pre class='hljs'><code><div>pretty-md-pdf -i my-doc.md -c /tmp/config.json
 </div></code></pre>
 <p>From JavaScript you can do:</p>
-<pre class='hljs'><code><div>prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">"my-doc.md"</span>, <span class="hljs-attr">configFilePath</span>: <span class="hljs-string">"/tmp/config.json"</span>)
+<pre class='hljs'><code><div>prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">configFilePath</span>: <span class="hljs-string">&quot;/tmp/config.json&quot;</span>)
 </div></code></pre>
 <h3 id="example">Example</h3>
 <p>Below is the default config JSON file as an example:</p>
 <pre class='hljs'><code><div>{
-    <span class="hljs-attr">"type"</span>: [
-        <span class="hljs-string">"pdf"</span>
+    <span class="hljs-attr">&quot;type&quot;</span>: [
+        <span class="hljs-string">&quot;pdf&quot;</span>
     ],
-    <span class="hljs-attr">"outputDirectory"</span>: <span class="hljs-string">""</span>,
-    <span class="hljs-attr">"outputDirectoryRelativePathFile"</span>: <span class="hljs-literal">false</span>,
-    <span class="hljs-attr">"styles"</span>: [],
-    <span class="hljs-attr">"stylesRelativePathFile"</span>: <span class="hljs-literal">false</span>,
-    <span class="hljs-attr">"includeDefaultStyles"</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">"highlight"</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">"highlightStyle"</span>: <span class="hljs-string">""</span>,
-    <span class="hljs-attr">"breaks"</span>: <span class="hljs-literal">false</span>,
-    <span class="hljs-attr">"emoji"</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">"markdown-it-include"</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">"executablePath"</span>: <span class="hljs-string">""</span>,
-    <span class="hljs-attr">"scale"</span>: <span class="hljs-number">1</span>,
-    <span class="hljs-attr">"displayHeaderFooter"</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">"headerTemplate"</span>: <span class="hljs-string">"&lt;div style=\"font-size: 9px; margin-left: 1cm;\"&gt; &lt;span class='title'&gt;&lt;/span&gt;&lt;/div&gt; &lt;div style=\"font-size: 9px; margin-left: auto; margin-right: 1cm; \"&gt; &lt;span class='date'&gt;&lt;/span&gt;&lt;/div&gt;"</span>,
-    <span class="hljs-attr">"footerTemplate"</span>: <span class="hljs-string">"&lt;div style=\"font-size: 9px; margin: 0 auto;\"&gt; &lt;span class='pageNumber'&gt;&lt;/span&gt; / &lt;span class='totalPages'&gt;&lt;/span&gt;&lt;/div&gt;"</span>,
-    <span class="hljs-attr">"printBackground"</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">"orientation"</span>: <span class="hljs-string">"portrait"</span>,
-    <span class="hljs-attr">"pageRanges"</span>: <span class="hljs-string">""</span>,
-    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"A4"</span>,
-    <span class="hljs-attr">"width"</span>: <span class="hljs-string">""</span>,
-    <span class="hljs-attr">"height"</span>: <span class="hljs-string">""</span>,
-    <span class="hljs-attr">"margin"</span>: <span class="hljs-string">"1cm"</span>,
-    <span class="hljs-attr">"quality"</span>: <span class="hljs-number">100</span>,
-    <span class="hljs-attr">"clip"</span>: {
-        <span class="hljs-attr">"height"</span>: <span class="hljs-literal">null</span>
+    <span class="hljs-attr">&quot;outputDirectory&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-attr">&quot;outputDirectoryRelativePathFile&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;styles&quot;</span>: [],
+    <span class="hljs-attr">&quot;stylesRelativePathFile&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;includeDefaultStyles&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">&quot;highlight&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">&quot;highlightStyle&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-attr">&quot;breaks&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;emoji&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">&quot;markdown-it-include&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">&quot;executablePath&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-attr">&quot;scale&quot;</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">&quot;displayHeaderFooter&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">&quot;headerTemplate&quot;</span>: <span class="hljs-string">&quot;&lt;div style=\&quot;font-size: 9px; margin-left: 1cm;\&quot;&gt; &lt;span class=&#x27;title&#x27;&gt;&lt;/span&gt;&lt;/div&gt; &lt;div style=\&quot;font-size: 9px; margin-left: auto; margin-right: 1cm; \&quot;&gt; &lt;span class=&#x27;date&#x27;&gt;&lt;/span&gt;&lt;/div&gt;&quot;</span>,
+    <span class="hljs-attr">&quot;footerTemplate&quot;</span>: <span class="hljs-string">&quot;&lt;div style=\&quot;font-size: 9px; margin: 0 auto;\&quot;&gt; &lt;span class=&#x27;pageNumber&#x27;&gt;&lt;/span&gt; / &lt;span class=&#x27;totalPages&#x27;&gt;&lt;/span&gt;&lt;/div&gt;&quot;</span>,
+    <span class="hljs-attr">&quot;printBackground&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">&quot;orientation&quot;</span>: <span class="hljs-string">&quot;portrait&quot;</span>,
+    <span class="hljs-attr">&quot;pageRanges&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-attr">&quot;format&quot;</span>: <span class="hljs-string">&quot;A4&quot;</span>,
+    <span class="hljs-attr">&quot;width&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-attr">&quot;height&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-attr">&quot;margin&quot;</span>: <span class="hljs-string">&quot;1cm&quot;</span>,
+    <span class="hljs-attr">&quot;quality&quot;</span>: <span class="hljs-number">100</span>,
+    <span class="hljs-attr">&quot;clip&quot;</span>: {
+        <span class="hljs-attr">&quot;height&quot;</span>: <span class="hljs-literal">null</span>
     },
-    <span class="hljs-attr">"omitBackground"</span>: <span class="hljs-literal">false</span>
+    <span class="hljs-attr">&quot;omitBackground&quot;</span>: <span class="hljs-literal">false</span>
 }
 </div></code></pre>
 <h3 id="options">Options</h3>
@@ -664,11 +664,11 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <li>Multiple output formats support</li>
 <li>Default: pdf</li>
 </ul>
-<pre class='hljs'><code><div><span class="hljs-string">"type"</span>: [
-  <span class="hljs-string">"pdf"</span>,
-  <span class="hljs-string">"html"</span>,
-  <span class="hljs-string">"png"</span>,
-  <span class="hljs-string">"jpeg"</span>
+<pre class='hljs'><code><div><span class="hljs-string">&quot;type&quot;</span>: [
+  <span class="hljs-string">&quot;pdf&quot;</span>,
+  <span class="hljs-string">&quot;html&quot;</span>,
+  <span class="hljs-string">&quot;png&quot;</span>,
+  <span class="hljs-string">&quot;jpeg&quot;</span>
 ],
 </div></code></pre>
 <a id="pretty-pdf-outputdirectory"/>
@@ -677,10 +677,10 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <li>Output Directory</li>
 <li>All <code>\</code> need to be written as <code>\\</code> (Windows)</li>
 </ul>
-<pre class='hljs'><code><div><span class="hljs-string">"outputDirectory"</span>: <span class="hljs-string">"C:\\work\\output"</span>,
+<pre class='hljs'><code><div><span class="hljs-string">&quot;outputDirectory&quot;</span>: <span class="hljs-string">&quot;C:\\work\\output&quot;</span>,
 </div></code></pre>
 <p><em>Relative Paths</em></p>
-<pre class='hljs'><code><div><span class="hljs-string">"outputDirectory"</span>: <span class="hljs-string">"~/output"</span>,
+<pre class='hljs'><code><div><span class="hljs-string">&quot;outputDirectory&quot;</span>: <span class="hljs-string">&quot;~/output&quot;</span>,
 </div></code></pre>
 <ul>
 <li>If you set a directory with a <code>relative path</code>, it will be created if the directory does not exist</li>
@@ -701,24 +701,24 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <li>If the file does not exist, it will be skipped</li>
 <li>All <code>\</code> need to be written as <code>\\</code> (Windows)</li>
 </ul>
-<pre class='hljs'><code><div><span class="hljs-string">"styles"</span>: [
-  <span class="hljs-string">"C:\\Users\\&lt;USERNAME&gt;\\Documents\\css"</span>,
-  <span class="hljs-string">"/home/&lt;USERNAME&gt;/settings/css"</span>,
+<pre class='hljs'><code><div><span class="hljs-string">&quot;styles&quot;</span>: [
+  <span class="hljs-string">&quot;C:\\Users\\&lt;USERNAME&gt;\\Documents\\css&quot;</span>,
+  <span class="hljs-string">&quot;/home/&lt;USERNAME&gt;/settings/css&quot;</span>,
 ],
 </div></code></pre>
-<pre class='hljs'><code><div><span class="hljs-string">"styles"</span>: [
-  <span class="hljs-string">"css"</span>,
+<pre class='hljs'><code><div><span class="hljs-string">&quot;styles&quot;</span>: [
+  <span class="hljs-string">&quot;css&quot;</span>,
 ],
 </div></code></pre>
-<pre class='hljs'><code><div><span class="hljs-string">"styles"</span>: [
-  <span class="hljs-string">"~/.config/Code/User/css"</span>
+<pre class='hljs'><code><div><span class="hljs-string">&quot;styles&quot;</span>: [
+  <span class="hljs-string">&quot;~/.config/Code/User/css&quot;</span>
 ],
 </div></code></pre>
 <ul>
 <li>Remote CSS (https://xxx/xxx.css) is applied correctly for JPG and PNG, but problems occur with PDF</li>
 </ul>
-<pre class='hljs'><code><div><span class="hljs-string">"styles"</span>: [
-  <span class="hljs-string">"https://xxx/css"</span>
+<pre class='hljs'><code><div><span class="hljs-string">&quot;styles&quot;</span>: [
+  <span class="hljs-string">&quot;https://xxx/css&quot;</span>
 ],
 </div></code></pre>
 <a id="pretty-pdf-stylesRelativePathFile"/>
@@ -748,7 +748,7 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <li><a href="https://github.com/isagalaev/highlight.js/tree/master/src/styles">file name list</a></li>
 <li>demo site : https://highlightjs.org/static/demo/</li>
 </ul>
-<pre class='hljs'><code><div><span class="hljs-string">"highlightStyle"</span>: <span class="hljs-string">"github.css"</span>,
+<pre class='hljs'><code><div><span class="hljs-string">&quot;highlightStyle&quot;</span>: <span class="hljs-string">&quot;github.css&quot;</span>,
 </div></code></pre>
 <a id="markdown-options"/>
 <h3 id="markdown-options">Markdown options</h3>
@@ -774,7 +774,7 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <li>Path to a Chromium or Chrome executable to run instead of the bundled Chromium</li>
 <li>All <code>\</code> need to be written as <code>\\</code> (Windows)</li>
 </ul>
-<pre class='hljs'><code><div><span class="hljs-string">"executablePath"</span>: <span class="hljs-string">"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"</span>
+<pre class='hljs'><code><div><span class="hljs-string">&quot;executablePath&quot;</span>: <span class="hljs-string">&quot;C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe&quot;</span>
 </div></code></pre>
 <a id="common-options"/>
 <h3 id="common-options">Common Options</h3>
@@ -784,7 +784,7 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <li>Scale of the page rendering</li>
 <li>number. default: 1</li>
 </ul>
-<pre class='hljs'><code><div><span class="hljs-string">"scale"</span>: <span class="hljs-number">1</span>
+<pre class='hljs'><code><div><span class="hljs-string">&quot;scale&quot;</span>: <span class="hljs-number">1</span>
 </div></code></pre>
 <a id="pdf-options"/>
 <h3 id="pdf-options">PDF options</h3>
@@ -809,9 +809,9 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <li><code>&lt;span class='pageNumber'&gt;&lt;/span&gt;</code> : current page number</li>
 <li><code>&lt;span class='totalPages'&gt;&lt;/span&gt;</code> : total pages in the document</li>
 </ul>
-<pre class='hljs'><code><div><span class="hljs-string">"headerTemplate"</span>: <span class="hljs-string">"&lt;div style=\"font-size: 9px; margin-left: 1cm;\"&gt; &lt;span class='title'&gt;&lt;/span&gt;&lt;/div&gt; &lt;div style=\"font-size: 9px; margin-left: auto; margin-right: 1cm; \"&gt; &lt;span class='date'&gt;&lt;/span&gt;&lt;/div&gt;"</span>,
+<pre class='hljs'><code><div><span class="hljs-string">&quot;headerTemplate&quot;</span>: <span class="hljs-string">&quot;&lt;div style=\&quot;font-size: 9px; margin-left: 1cm;\&quot;&gt; &lt;span class=&#x27;title&#x27;&gt;&lt;/span&gt;&lt;/div&gt; &lt;div style=\&quot;font-size: 9px; margin-left: auto; margin-right: 1cm; \&quot;&gt; &lt;span class=&#x27;date&#x27;&gt;&lt;/span&gt;&lt;/div&gt;&quot;</span>,
 </div></code></pre>
-<pre class='hljs'><code><div><span class="hljs-string">"footerTemplate"</span>: <span class="hljs-string">"&lt;div style=\"font-size: 9px; margin: 0 auto;\"&gt; &lt;span class='pageNumber'&gt;&lt;/span&gt; / &lt;span class='totalPages'&gt;&lt;/span&gt;&lt;/div&gt;"</span>,
+<pre class='hljs'><code><div><span class="hljs-string">&quot;footerTemplate&quot;</span>: <span class="hljs-string">&quot;&lt;div style=\&quot;font-size: 9px; margin: 0 auto;\&quot;&gt; &lt;span class=&#x27;pageNumber&#x27;&gt;&lt;/span&gt; / &lt;span class=&#x27;totalPages&#x27;&gt;&lt;/span&gt;&lt;/div&gt;&quot;</span>,
 </div></code></pre>
 <a id="pretty-pdf-printBackground"/>
 <h4 id="printbackground"><code>printBackground</code></h4>
@@ -832,7 +832,7 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <li>Paper ranges to print, e.g., '1-5, 8, 11-13'</li>
 <li>Default: all pages</li>
 </ul>
-<pre class='hljs'><code><div><span class="hljs-string">"pageRanges"</span>: <span class="hljs-string">"1,4-"</span>,
+<pre class='hljs'><code><div><span class="hljs-string">&quot;pageRanges&quot;</span>: <span class="hljs-string">&quot;1,4-&quot;</span>,
 </div></code></pre>
 <a id="pretty-pdf-format"/>
 <h4 id="format"><code>format</code></h4>
@@ -841,7 +841,7 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <li>Letter, Legal, Tabloid, Ledger, A0, A1, A2, A3, A4, A5, A6</li>
 <li>Default: A4</li>
 </ul>
-<pre class='hljs'><code><div><span class="hljs-string">"format"</span>: <span class="hljs-string">"A4"</span>,
+<pre class='hljs'><code><div><span class="hljs-string">&quot;format&quot;</span>: <span class="hljs-string">&quot;A4&quot;</span>,
 </div></code></pre>
 <a id="pretty-pdf-width"/>
 <a id="pretty-pdf-height"/>
@@ -851,8 +851,8 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <li>Paper width / height, accepts values labeled with units(mm, cm, in, px)</li>
 <li>If it is set, it overrides the format option</li>
 </ul>
-<pre class='hljs'><code><div><span class="hljs-string">"width"</span>: <span class="hljs-string">"10cm"</span>,
-<span class="hljs-string">"height"</span>: <span class="hljs-string">"20cm"</span>,
+<pre class='hljs'><code><div><span class="hljs-string">&quot;width&quot;</span>: <span class="hljs-string">&quot;10cm&quot;</span>,
+<span class="hljs-string">&quot;height&quot;</span>: <span class="hljs-string">&quot;20cm&quot;</span>,
 </div></code></pre>
 <a id="pretty-pdf-margintop"/>
 <a id="pretty-pdf-marginbottom"/>
@@ -865,10 +865,10 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <ul>
 <li>Paper margins.units(mm, cm, in, px)</li>
 </ul>
-<pre class='hljs'><code><div><span class="hljs-string">"margin.top"</span>: <span class="hljs-string">"1.5cm"</span>,
-<span class="hljs-string">"margin.bottom"</span>: <span class="hljs-string">"1cm"</span>,
-<span class="hljs-string">"margin.right"</span>: <span class="hljs-string">"1cm"</span>,
-<span class="hljs-string">"margin.left"</span>: <span class="hljs-string">"1cm"</span>,
+<pre class='hljs'><code><div><span class="hljs-string">&quot;margin.top&quot;</span>: <span class="hljs-string">&quot;1.5cm&quot;</span>,
+<span class="hljs-string">&quot;margin.bottom&quot;</span>: <span class="hljs-string">&quot;1cm&quot;</span>,
+<span class="hljs-string">&quot;margin.right&quot;</span>: <span class="hljs-string">&quot;1cm&quot;</span>,
+<span class="hljs-string">&quot;margin.left&quot;</span>: <span class="hljs-string">&quot;1cm&quot;</span>,
 </div></code></pre>
 <a id="jpeg-options"/>
 <h3 id="png-jpeg-options">PNG JPEG options</h3>
@@ -880,7 +880,7 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <ul>
 <li>jpeg only. The quality of the image, between 0-100. Not applicable to png images</li>
 </ul>
-<pre class='hljs'><code><div><span class="hljs-string">"quality"</span>: <span class="hljs-number">100</span>,
+<pre class='hljs'><code><div><span class="hljs-string">&quot;quality&quot;</span>: <span class="hljs-number">100</span>,
 </div></code></pre>
 <a id="pretty-pdf-clipx"/>
 <a id="pretty-pdf-clipy"/>
@@ -895,16 +895,16 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <li>number</li>
 </ul>
 <pre class='hljs'><code><div><span class="hljs-comment">//  x-coordinate of top-left corner of clip area</span>
-<span class="hljs-string">"clip.x"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-string">&quot;clip.x&quot;</span>: <span class="hljs-number">0</span>,
 
 <span class="hljs-comment">// y-coordinate of top-left corner of clip area</span>
-<span class="hljs-string">"clip.y"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-string">&quot;clip.y&quot;</span>: <span class="hljs-number">0</span>,
 
 <span class="hljs-comment">// width of clipping area</span>
-<span class="hljs-string">"clip.width"</span>: <span class="hljs-number">1000</span>,
+<span class="hljs-string">&quot;clip.width&quot;</span>: <span class="hljs-number">1000</span>,
 
 <span class="hljs-comment">// height of clipping area</span>
-<span class="hljs-string">"clip.height"</span>: <span class="hljs-number">1000</span>,
+<span class="hljs-string">&quot;clip.height&quot;</span>: <span class="hljs-number">1000</span>,
 </div></code></pre>
 <a id="pretty-pdf-omitBackground"/>
 <h4 id="omitbackground"><code>omitBackground</code></h4>
@@ -924,12 +924,12 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <h3 id="output-directory">Output directory</h3>
 <p>If you want to always output to a directory path relative from the Markdown file.</p>
 <p>For example, to output to the &quot;output&quot; directory in the same directory as the Markdown file, set it as follows.</p>
-<pre class='hljs'><code><div><span class="hljs-string">"outputDirectory"</span> : <span class="hljs-string">"output"</span>,
-<span class="hljs-string">"outputDirectoryRelativePathFile"</span>: <span class="hljs-literal">true</span>,
+<pre class='hljs'><code><div><span class="hljs-string">&quot;outputDirectory&quot;</span> : <span class="hljs-string">&quot;output&quot;</span>,
+<span class="hljs-string">&quot;outputDirectoryRelativePathFile&quot;</span>: <span class="hljs-literal">true</span>,
 </div></code></pre>
 <h3 id="page-break">Page Break</h3>
 <p>Please use the following to insert a page break.</p>
-<pre class='hljs'><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"page"</span>/&gt;</span>
+<pre class='hljs'><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;page&quot;</span>/&gt;</span>
 </div></code></pre>
 <h2 id="note-on-chromium">Note on Chromium</h2>
 <p>Chromium download starts automatically before the first conversion; this is a one time operation, only if your reinstall this package will it be downloaded again.</p>
