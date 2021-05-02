@@ -744,11 +744,14 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <a id="pretty-pdf-highlightStyle"/>
 <h4 id="highlightstyle"><code>highlightStyle</code></h4>
 <ul>
-<li>Set the style file name. for example: github.css, monokai.css ...</li>
-<li><a href="https://github.com/isagalaev/highlight.js/tree/master/src/styles">file name list</a></li>
+<li>Set the style name, this is a builtin Highlight JS css file without the file extension. For example: <code>github</code>, <code>monokai</code>... Default: <code>github</code></li>
+<li><a href="https://github.com/isagalaev/highlight.js/tree/master/src/styles">style list</a></li>
 <li>demo site : https://highlightjs.org/static/demo/</li>
 </ul>
-<pre class='hljs'><code><div><span class="hljs-string">&quot;highlightStyle&quot;</span>: <span class="hljs-string">&quot;github.css&quot;</span>,
+<pre class='hljs'><code><div><span class="hljs-string">&quot;highlightStyle&quot;</span>: <span class="hljs-string">&quot;github&quot;</span>,
+</div></code></pre>
+<p><em>Note: You can specify a path to a css file here, ensure your path ends with <code>.css</code></em></p>
+<pre class='hljs'><code><div><span class="hljs-string">&quot;highlightStyle&quot;</span>: <span class="hljs-string">&quot;styles/custom.css&quot;</span>,
 </div></code></pre>
 <a id="markdown-options"/>
 <h3 id="markdown-options">Markdown options</h3>

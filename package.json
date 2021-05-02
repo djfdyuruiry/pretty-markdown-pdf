@@ -2,7 +2,7 @@
   "name": "pretty-markdown-pdf",
   "displayName": "Pretty Markdown PDF",
   "description": "Convert Markdown to a Pretty PDF :D",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "publisher": "djfdyuruiry",
   "license": "MIT",
   "repository": {
@@ -18,10 +18,10 @@
     "test": "improved-yarn-audit && yarn samples"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.3",
+    "cheerio": "^1.0.0-rc.6",
     "emoji-images": "^0.1.1",
-    "highlight.js": "^10.1.2",
-    "markdown-it": "^12.0.2",
+    "highlight.js": "^10.7.2",
+    "markdown-it": "^12.0.6",
     "markdown-it-checkbox": "^1.1.0",
     "markdown-it-container": "^3.0.0",
     "markdown-it-emoji": "^2.0.0",
@@ -29,13 +29,13 @@
     "markdown-it-named-headers": "0.0.4",
     "markdown-it-plantuml": "^1.0.0",
     "mkdirp": "^1.0.4",
-    "mustache": "^4.0.1",
-    "puppeteer": "^5.2.1",
+    "mustache": "^4.2.0",
+    "puppeteer": "^9.0.0",
     "rimraf": "^3.0.2",
-    "vscode-uri": "^2.1.2",
-    "yargs": "^16.1.1"
+    "vscode-uri": "^3.0.2",
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "improved-yarn-audit": "^2.3.1"
+    "improved-yarn-audit": "^2.3.2"
   }
 }

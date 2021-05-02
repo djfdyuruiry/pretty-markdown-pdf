@@ -79,7 +79,7 @@ function convertMarkdownToHtml(filename, type, text, config) {
         highlight: function (str, lang) {
           if (lang && hljs.getLanguage(lang)) {
             try {
-              str = hljs.highlight(lang, str, true).value
+              str = hljs.highlight(str, {language: lang}, true).value
             } catch (error) {
               str = md.utils.escapeHtml(str)
 
@@ -599,8 +599,13 @@ function readStyles(uri, config) {
     let ishighlight = config["highlight"]
     if (ishighlight) {
       if (highlightStyle) {
-        let css = config["highlightStyle"] || "github.css"
-        filename = path.join(__dirname, "node_modules", "highlight.js", "styles", css)
+        let cssPath = config["highlightStyle"] || "github"
+        let useBuiltInHighlightStyle = !cssPath.endsWith(".css")
+
+        filename = useBuiltInHighlightStyle
+          ? path.join(__dirname, "node_modules", "highlight.js", "styles", cssPath, ".css")
+          : cssPath
+
         style += makeCss(filename)
       } else {
         filename = path.join(__dirname, "styles", "tomorrow.css")

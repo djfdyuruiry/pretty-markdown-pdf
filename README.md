@@ -303,12 +303,18 @@ Below is the default config JSON file as an example:
 <a id="pretty-pdf-highlightStyle"/>
 
 #### `highlightStyle`
-  - Set the style file name. for example: github.css, monokai.css ...
-  - [file name list](https://github.com/isagalaev/highlight.js/tree/master/src/styles)
+  - Set the style name, this is a builtin Highlight JS css file without the file extension. For example: `github`, `monokai`... Default: `github`
+  - [style list](https://github.com/isagalaev/highlight.js/tree/master/src/styles)
   - demo site : https://highlightjs.org/static/demo/
 
 ```javascript
-"highlightStyle": "github.css",
+"highlightStyle": "github",
+```
+
+*Note: You can specify a path to a css file here, ensure your path ends with `.css`*
+
+```javascript
+"highlightStyle": "styles/custom.css",
 ```
 
 <a id="markdown-options"/>
