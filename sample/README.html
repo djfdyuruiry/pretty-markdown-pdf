@@ -468,13 +468,13 @@ Alice -[#0000FF]-&gt;Bob : ok
 <pre class='hljs'><code><div><span class="hljs-keyword">const</span> prettyMdPdf = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;pretty-markdown-pdf&quot;</span>)
 
 <span class="hljs-comment">// output to `my-doc.pdf`</span>
-prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span> })
+prettyMdPdf.convertMd({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span> })
 
 <span class="hljs-comment">// specify an output file path</span>
-prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">outputFilePath</span>: <span class="hljs-string">&quot;output.pdf&quot;</span> })
+prettyMdPdf.convertMd({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">outputFilePath</span>: <span class="hljs-string">&quot;output.pdf&quot;</span> })
 
 <span class="hljs-comment">// specify an output file type, outputs to `my-doc.html`</span>
-prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">outputFileType</span>: <span class="hljs-string">&quot;html&quot;</span> })
+prettyMdPdf.convertMd({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">outputFileType</span>: <span class="hljs-string">&quot;html&quot;</span> })
 
 </div></code></pre>
 <h2 id="configuration">Configuration</h2>
@@ -483,7 +483,7 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <pre class='hljs'><code><div>pretty-md-pdf -i my-doc.md -c /tmp/config.json
 </div></code></pre>
 <p>From JavaScript you can do:</p>
-<pre class='hljs'><code><div>prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">configFilePath</span>: <span class="hljs-string">&quot;/tmp/config.json&quot;</span>)
+<pre class='hljs'><code><div>prettyMdPdf.convertMd({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">configFilePath</span>: <span class="hljs-string">&quot;/tmp/config.json&quot;</span>)
 </div></code></pre>
 <h3 id="example">Example</h3>
 <p>Below is the default config JSON file as an example:</p>
@@ -661,7 +661,7 @@ prettyMdPdf.convertMdToPdf({ <span class="hljs-attr">markdownFilePath</span>: <s
 <h4 id="type"><code>type</code></h4>
 <ul>
 <li>Output format: pdf, html, png, jpeg</li>
-<li>Multiple output formats support</li>
+<li>Multiple output formats supported</li>
 <li>Default: pdf</li>
 </ul>
 <pre class='hljs'><code><div><span class="hljs-string">&quot;type&quot;</span>: [
