@@ -94,13 +94,13 @@ You can programmatically call this package, example:
 const prettyMdPdf = require("pretty-markdown-pdf")
 
 // output to `my-doc.pdf`
-prettyMdPdf.convertMdToPdf({ markdownFilePath: "my-doc.md" })
+prettyMdPdf.convertMd({ markdownFilePath: "my-doc.md" })
 
 // specify an output file path
-prettyMdPdf.convertMdToPdf({ markdownFilePath: "my-doc.md", outputFilePath: "output.pdf" })
+prettyMdPdf.convertMd({ markdownFilePath: "my-doc.md", outputFilePath: "output.pdf" })
 
 // specify an output file type, outputs to `my-doc.html`
-prettyMdPdf.convertMdToPdf({ markdownFilePath: "my-doc.md", outputFileType: "html" })
+prettyMdPdf.convertMd({ markdownFilePath: "my-doc.md", outputFileType: "html" })
 
 ```
 
@@ -117,7 +117,7 @@ pretty-md-pdf -i my-doc.md -c /tmp/config.json
 From JavaScript you can do:
 
 ```javascript
-prettyMdPdf.convertMdToPdf({ markdownFilePath: "my-doc.md", configFilePath: "/tmp/config.json")
+prettyMdPdf.convertMd({ markdownFilePath: "my-doc.md", configFilePath: "/tmp/config.json")
 ```
 
 ### Example
@@ -203,7 +203,7 @@ Below is the default config JSON file as an example:
 
 #### `type`
   - Output format: pdf, html, png, jpeg
-  - Multiple output formats support
+  - Multiple output formats supported
   - Default: pdf
 
 ```javascript
@@ -303,12 +303,18 @@ Below is the default config JSON file as an example:
 <a id="pretty-pdf-highlightStyle"/>
 
 #### `highlightStyle`
-  - Set the style file name. for example: github.css, monokai.css ...
-  - [file name list](https://github.com/isagalaev/highlight.js/tree/master/src/styles)
+  - Set the style name, this is a builtin Highlight JS css file without the file extension. For example: `github`, `monokai`... Default: `github`
+  - [style list](https://github.com/isagalaev/highlight.js/tree/master/src/styles)
   - demo site : https://highlightjs.org/static/demo/
 
 ```javascript
-"highlightStyle": "github.css",
+"highlightStyle": "github",
+```
+
+*Note: You can specify a path to a css file here, ensure your path ends with `.css`*
+
+```javascript
+"highlightStyle": "styles/custom.css",
 ```
 
 <a id="markdown-options"/>
