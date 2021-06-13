@@ -15,7 +15,7 @@
   },
   "scripts": {
     "samples": "yarn install && ./generate-samples.sh",
-    "test": "improved-yarn-audit && yarn samples"
+    "test": "yarn install && improved-yarn-audit && yarn samples"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.6",
