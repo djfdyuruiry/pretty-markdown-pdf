@@ -468,12 +468,12 @@ function getOutputDir(filename, resource, config) {
       return path.join(outputDirectory, path.basename(filename))
     }
 
-    // Use a workspace relative path if there is a workspace and markdown-pdf.outputDirectoryRootPath = workspace
+    // Use a workspace relative path if there is a workspace and markdown-pdf.outputDirectoryRelativePathFile is false
     let outputDirectoryRelativePathFile = config["outputDirectoryRelativePathFile"]
-    let root = getFolder(resource)
+    let root = process.cwd()
 
     if (outputDirectoryRelativePathFile === false && root) {
-      outputDir = path.join(root.uri.fsPath, outputDirectory)
+      outputDir = path.join(root, outputDirectory)
       mkdir(outputDir)
       return path.join(outputDir, path.basename(filename))
     }
@@ -484,14 +484,6 @@ function getOutputDir(filename, resource, config) {
     return path.join(outputDir, path.basename(filename))
   } catch (error) {
     showErrorMessage("getOutputDir()", error)
-  }
-}
-
-function getFolder(resource) {
-  return {
-    index: 0,
-    name: path.basename(resource.path),
-    uri: URI.file(path.dirname(resource.path))
   }
 }
 
@@ -577,24 +569,16 @@ function readStyles(uri, config) {
 
     includeDefaultStyles = config["includeDefaultStyles"]
 
-    // 1. read the default styles
+    // 1. read the default styles and the style of the markdown-pdf.
     if (includeDefaultStyles) {
       filename = path.join(__dirname, "styles", "markdown.css")
       style += makeCss(filename)
+      
+      filename = path.join(__dirname, "styles", "markdown-pdf.css")
+      style += makeCss(filename)
     }
 
-    // 2. read the style of the markdown.styles setting.
-    if (includeDefaultStyles) {
-      styles = config["styles"]
-      if (styles && Array.isArray(styles) && styles.length > 0) {
-        for (i = 0; i < styles.length; i++) {
-          let href = fixHref(uri, styles[i])
-          style += "<link rel=\"stylesheet\" href=\"" + href + "\" type=\"text/css\">"
-        }
-      }
-    }
-
-    // 3. read the style of the highlight.js.
+    // 2. read the style of the highlight.js.
     let highlightStyle = config["highlightStyle"] || ""
     let ishighlight = config["highlight"]
     if (ishighlight) {
@@ -613,17 +597,11 @@ function readStyles(uri, config) {
       }
     }
 
-    // 4. read the style of the markdown-pdf.
-    if (includeDefaultStyles) {
-      filename = path.join(__dirname, "styles", "markdown-pdf.css")
-      style += makeCss(filename)
-    }
-
-    // 5. read the style of the markdown-pdf.styles settings.
+    // 3. read the style of the markdown-pdf.styles settings.
     styles = config["styles"] || ""
     if (styles && Array.isArray(styles) && styles.length > 0) {
       for (i = 0; i < styles.length; i++) {
-        let href = fixHref(uri, styles[i])
+        let href = fixHref(uri, styles[i], config)
         style += "<link rel=\"stylesheet\" href=\"" + href + "\" type=\"text/css\">"
       }
     }
@@ -652,15 +630,15 @@ function fixHref(resource, href, config) {
     }
 
     // Use href as file URI if it is absolute
-    if (path.isAbsolute(href) || hrefUri.scheme === "file") {
+    if (path.isAbsolute(href)) {
       return URI.file(href).toString()
     }
 
     // Use a workspace relative path if there is a workspace and markdown-pdf.stylesRelativePathFile is false
     let stylesRelativePathFile = config["stylesRelativePathFile"]
-    let root = getFolder(resource)
+    let root = process.cwd()
     if (stylesRelativePathFile === false && root) {
-      return URI.file(path.join(root.uri.fsPath, href)).toString()
+      return URI.file(path.join(root, href)).toString()
     }
 
     // Otherwise look relative to the markdown file
