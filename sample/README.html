@@ -468,13 +468,13 @@ Alice -[#0000FF]-&gt;Bob : ok
 <pre class='hljs'><code><div><span class="hljs-keyword">const</span> prettyMdPdf = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;pretty-markdown-pdf&quot;</span>)
 
 <span class="hljs-comment">// output to `my-doc.pdf`</span>
-prettyMdPdf.convertMd({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span> })
+prettyMdPdf.<span class="hljs-title function_">convertMd</span>({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span> })
 
 <span class="hljs-comment">// specify an output file path</span>
-prettyMdPdf.convertMd({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">outputFilePath</span>: <span class="hljs-string">&quot;output.pdf&quot;</span> })
+prettyMdPdf.<span class="hljs-title function_">convertMd</span>({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">outputFilePath</span>: <span class="hljs-string">&quot;output.pdf&quot;</span> })
 
 <span class="hljs-comment">// specify an output file type, outputs to `my-doc.html`</span>
-prettyMdPdf.convertMd({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">outputFileType</span>: <span class="hljs-string">&quot;html&quot;</span> })
+prettyMdPdf.<span class="hljs-title function_">convertMd</span>({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">outputFileType</span>: <span class="hljs-string">&quot;html&quot;</span> })
 
 </div></code></pre>
 <h2 id="configuration">Configuration</h2>
@@ -483,42 +483,42 @@ prettyMdPdf.convertMd({ <span class="hljs-attr">markdownFilePath</span>: <span c
 <pre class='hljs'><code><div>pretty-md-pdf -i my-doc.md -c /tmp/config.json
 </div></code></pre>
 <p>From JavaScript you can do:</p>
-<pre class='hljs'><code><div>prettyMdPdf.convertMd({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">configFilePath</span>: <span class="hljs-string">&quot;/tmp/config.json&quot;</span>)
+<pre class='hljs'><code><div>prettyMdPdf.<span class="hljs-title function_">convertMd</span>({ <span class="hljs-attr">markdownFilePath</span>: <span class="hljs-string">&quot;my-doc.md&quot;</span>, <span class="hljs-attr">configFilePath</span>: <span class="hljs-string">&quot;/tmp/config.json&quot;</span>)
 </div></code></pre>
 <h3 id="example">Example</h3>
 <p>Below is the default config JSON file as an example:</p>
-<pre class='hljs'><code><div>{
-    <span class="hljs-attr">&quot;type&quot;</span>: [
+<pre class='hljs'><code><div><span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
         <span class="hljs-string">&quot;pdf&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;outputDirectory&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
-    <span class="hljs-attr">&quot;outputDirectoryRelativePathFile&quot;</span>: <span class="hljs-literal">false</span>,
-    <span class="hljs-attr">&quot;styles&quot;</span>: [],
-    <span class="hljs-attr">&quot;stylesRelativePathFile&quot;</span>: <span class="hljs-literal">false</span>,
-    <span class="hljs-attr">&quot;includeDefaultStyles&quot;</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">&quot;highlight&quot;</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">&quot;highlightStyle&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
-    <span class="hljs-attr">&quot;breaks&quot;</span>: <span class="hljs-literal">false</span>,
-    <span class="hljs-attr">&quot;emoji&quot;</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">&quot;markdown-it-include&quot;</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">&quot;executablePath&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
-    <span class="hljs-attr">&quot;scale&quot;</span>: <span class="hljs-number">1</span>,
-    <span class="hljs-attr">&quot;displayHeaderFooter&quot;</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">&quot;headerTemplate&quot;</span>: <span class="hljs-string">&quot;&lt;div style=\&quot;font-size: 9px; margin-left: 1cm;\&quot;&gt; &lt;span class=&#x27;title&#x27;&gt;&lt;/span&gt;&lt;/div&gt; &lt;div style=\&quot;font-size: 9px; margin-left: auto; margin-right: 1cm; \&quot;&gt; &lt;span class=&#x27;date&#x27;&gt;&lt;/span&gt;&lt;/div&gt;&quot;</span>,
-    <span class="hljs-attr">&quot;footerTemplate&quot;</span>: <span class="hljs-string">&quot;&lt;div style=\&quot;font-size: 9px; margin: 0 auto;\&quot;&gt; &lt;span class=&#x27;pageNumber&#x27;&gt;&lt;/span&gt; / &lt;span class=&#x27;totalPages&#x27;&gt;&lt;/span&gt;&lt;/div&gt;&quot;</span>,
-    <span class="hljs-attr">&quot;printBackground&quot;</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-attr">&quot;orientation&quot;</span>: <span class="hljs-string">&quot;portrait&quot;</span>,
-    <span class="hljs-attr">&quot;pageRanges&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
-    <span class="hljs-attr">&quot;format&quot;</span>: <span class="hljs-string">&quot;A4&quot;</span>,
-    <span class="hljs-attr">&quot;width&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
-    <span class="hljs-attr">&quot;height&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
-    <span class="hljs-attr">&quot;margin&quot;</span>: <span class="hljs-string">&quot;1cm&quot;</span>,
-    <span class="hljs-attr">&quot;quality&quot;</span>: <span class="hljs-number">100</span>,
-    <span class="hljs-attr">&quot;clip&quot;</span>: {
-        <span class="hljs-attr">&quot;height&quot;</span>: <span class="hljs-literal">null</span>
-    },
-    <span class="hljs-attr">&quot;omitBackground&quot;</span>: <span class="hljs-literal">false</span>
-}
+    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;outputDirectory&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;outputDirectoryRelativePathFile&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">false</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;styles&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;stylesRelativePathFile&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">false</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;includeDefaultStyles&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;highlight&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;highlightStyle&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;breaks&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">false</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;emoji&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;markdown-it-include&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;executablePath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;scale&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;displayHeaderFooter&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;headerTemplate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&lt;div style=\&quot;font-size: 9px; margin-left: 1cm;\&quot;&gt; &lt;span class=&#x27;title&#x27;&gt;&lt;/span&gt;&lt;/div&gt; &lt;div style=\&quot;font-size: 9px; margin-left: auto; margin-right: 1cm; \&quot;&gt; &lt;span class=&#x27;date&#x27;&gt;&lt;/span&gt;&lt;/div&gt;&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;footerTemplate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&lt;div style=\&quot;font-size: 9px; margin: 0 auto;\&quot;&gt; &lt;span class=&#x27;pageNumber&#x27;&gt;&lt;/span&gt; / &lt;span class=&#x27;totalPages&#x27;&gt;&lt;/span&gt;&lt;/div&gt;&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;printBackground&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;orientation&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;portrait&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;pageRanges&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;format&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;A4&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;width&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;height&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;margin&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1cm&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;quality&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">100</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;clip&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;height&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">null</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;omitBackground&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">false</span>
+<span class="hljs-punctuation">}</span>
 </div></code></pre>
 <h3 id="options">Options</h3>
 <table>
