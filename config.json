@@ -28,5 +28,9 @@
     "clip": {
         "height": null
     },
-    "omitBackground": false
+    "omitBackground": false,
+    "plantUML": {
+        "openMarker": null,
+        "closeMarker": null
+    }
 }

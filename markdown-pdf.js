@@ -180,7 +180,10 @@ function convertMarkdownToHtml(filename, type, text, config) {
 
   // PlantUML
   // https://github.com/gmunguia/markdown-it-plantuml
-  md.use(require("markdown-it-plantuml"))
+  md.use(require("markdown-it-plantuml"), {
+    openMarker: config["plantUML"]["openMarker"] ?? null,
+    closeMarker: config["plantUML"]["closeMarker"] ?? null
+  })
     
   // markdown-it-include
   // https://github.com/camelaissani/markdown-it-include
