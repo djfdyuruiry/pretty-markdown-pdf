@@ -48,6 +48,8 @@ Alice -[#0000FF]->Bob : ok
 @enduml
 ```
 
+_Note: To use planuml wrapped in markdown's code block, see config below._
+
 OUTPUT
 
 ![PlantUML](img/PlantUML.png)
@@ -507,6 +509,26 @@ Below is the default config JSON file as an example:
 #### `omitBackground`
   - Hides default white background and allows capturing screenshots with transparency
   - boolean. Default: false
+
+
+#### ```plantUML```
+
+To use different markers for planUML inside markdown file (mainly, when used within code block), use ```openMarker``` 
+and ```closeMarker``` settings
+
+Both ```openMarker``` and ```closeMarker``` are by default ```null```
+
+Example:
+```json
+{
+    ...
+    "plantUML": {
+        "openMarker": "```plantuml",
+        "closeMarker": "```"
+    }
+}
+```
+
 
 ## FAQ
 
