@@ -130,6 +130,9 @@ function convertMarkdownToHtml(filename, type, text, config) {
   // checkbox
   md.use(require("markdown-it-checkbox"))
 
+  // ignore front-matter
+  md.use(require("markdown-it-front-matter"), (frontMatter) => '');
+
   // emoji
   let f = config["emoji"]
   if (f) {

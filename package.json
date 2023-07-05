@@ -25,6 +25,7 @@
     "markdown-it-checkbox": "^1.1.0",
     "markdown-it-container": "^3.0.0",
     "markdown-it-emoji": "^2.0.2",
+    "markdown-it-front-matter": "^0.2.3",
     "markdown-it-include": "^2.0.0",
     "markdown-it-named-headers": "0.0.4",
     "markdown-it-plantuml": "^1.0.0",
